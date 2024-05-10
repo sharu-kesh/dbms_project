@@ -18,6 +18,11 @@ export default function Home(){
         <Card imageUrl="https://parivahan.gov.in/parivahan//sites/default/files/images/v-pucc-icon.png" title={"PUCC"} text={"Check whether your vehicle is under pollution control"} page="./Pollution"/>
         <Card imageUrl="https://parivahan.gov.in/parivahan//sites/default/files/images/v-learners-license-services.png" title={"License"} text={"Get your license details online"} page="./License" />
         <Card imageUrl="https://parivahan.gov.in/parivahan//sites/default/files/images/v-permit-services.png" title={"Insurance"} text={"Know about your vehicle's insurance"} page={"./Insurance"} />
+        <Card imageUrl="https://parivahan.gov.in/parivahan//sites/default/files/images/v-homologation.png" title={"Owner Details"} text={"Check for your details"} page={"./Owner"} />
+        <Card imageUrl="https://parivahan.gov.in/parivahan//sites/default/files/images/v-echallan-icon.png" title={"Transfer Ownership"} text={"Udpdate the ownership"} page={"./Transfer"} />
+        <Card imageUrl="https://parivahan.gov.in/parivahan//sites/default/files/images/v-vehicle-registration.png" title={"Update Details"} text={"Udpdate Your personal details"} page={"./Update"} />
+
+        
         </div>
         <div className="news-container">
             <div className="safe">

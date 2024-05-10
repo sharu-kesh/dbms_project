@@ -12,6 +12,10 @@ import Admin from './Admin'
 import Signup1 from './signup1'
 import Signup2 from './signup2'
 import Signup3 from './signup3'
+import Transfer from './transfer'
+import License from './License'
+import Owner from './owner'
+import Update from './update'
 
 import {BrowserRouter,Routes,Route} from "react-router-dom"
 function App() {
@@ -33,6 +37,13 @@ function App() {
       <Route path="/signup1" element={<Signup1/>}/>
       <Route path="/signup2" element={<Signup2/>}/>
       <Route path="/signup3" element={<Signup3/>}/>
+      <Route path="/transfer" element={<Transfer/>}/>
+      <Route path="/license" element={<License/>}/>
+      <Route path="/owner" element={<Owner/>}/>
+      <Route path="/update" element={<Update/>}/>
+
+
+
 
     </Routes>
     </BrowserRouter>
