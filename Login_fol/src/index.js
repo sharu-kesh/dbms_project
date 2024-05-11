@@ -28,6 +28,10 @@ db.connect()
 app.use(express.urlencoded({extended:true}))
 app.use(cors())
 app.use(express.json())
+app.post("/user/signup",async (req,res,next)=>{
+    console.log(req.body)
+    // const response = await db.query("INSER",[])
+})
 app.post("/user/login",async(req,res,next)=>{
     console.log(req.body)
     const {email,password}=req.body
