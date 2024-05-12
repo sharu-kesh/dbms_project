@@ -12,6 +12,7 @@ import Admin from './Admin'
 import Signup1 from './signup1'
 import Signup2 from './signup2'
 import Signup3 from './signup3'
+import Signup4 from './signup4'
 import Transfer from './transfer'
 import License from './License'
 import Owner from './owner'
@@ -37,6 +38,7 @@ function App() {
       <Route path="/signup1" element={<Signup1/>}/>
       <Route path="/signup2" element={<Signup2/>}/>
       <Route path="/signup3" element={<Signup3/>}/>
+      <Route path="/signup4" element={<Signup4/>}/>
       <Route path="/transfer" element={<Transfer/>}/>
       <Route path="/license" element={<License/>}/>
       <Route path="/owner" element={<Owner/>}/>

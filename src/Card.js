@@ -5,7 +5,7 @@ function Card({imageUrl,title,text,page}){
             <img className="card-img" src={imageUrl} alt=""  />
             <h2 className="card-title">{title}</h2>
             <p className="card-text">{text}</p>
-            <button><a href={page}>More</a></button>
+            <a href={page}><button>More</button></a>
         </div>
         </div>
     )
