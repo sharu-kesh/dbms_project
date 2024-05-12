@@ -1,10 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './login.css'
 import { FaLock } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import {useNavigate} from "react-router-dom"
 import axios from "axios"
-import Link from 'react-dom'
 export default function User(){
     const [email,setEmail] = useState("")
     const [password,setPassword] = useState("")
@@ -20,6 +19,7 @@ e.preventDefault()
         navigate("/home")
     }else{
         console.log(response.data.message)
+        setError(response.data.message)
     }
     }catch(error){
         console.log("here")
@@ -29,6 +29,9 @@ e.preventDefault()
       else setError("Something went wrong! Please try again.");
     }
 }
+useEffect(function(){
+    setError("")
+},[email,password])
 
     return (
     <div className="wrapper-container">
@@ -58,7 +61,7 @@ e.preventDefault()
             </div>
             <input type='submit' className="submit" value='Login'
             />
-            <p>Don't have an account?  <span onClick={()=>navigate("/signup1")} style={{color:"white",fontSize:"20px"}}>Register</span></p>
+            <p>Don't have an account?  <span onClick={()=>navigate("/signup1")} style={{color:"white",fontSize:"20px",cursor:"pointer"}}>Register</span></p>
         </form>
         {error && <p id="err">{error}</p>}
 

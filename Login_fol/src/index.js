@@ -28,6 +28,7 @@ db.connect()
 app.use(express.urlencoded({extended:true}))
 app.use(cors())
 app.use(express.json())
+let userId;
 app.post("/user/login",async(req,res,next)=>{
     console.log(req.body)
     const {email,password}=req.body
@@ -37,9 +38,26 @@ app.post("/user/login",async(req,res,next)=>{
             console.log("here")
             return next(errorHandler(404,"User not found"))
         }else{
-            const validPwd = password === response.rows[0].password;
+            const validPwd = password === response.rows[0].pass_word;
+            userId = response.rows[0].user_id;
+            console.log(userId)
             if(!validPwd) return next(errorHandler(401,"Wrong credentials"))
             res.status(200).json({success:true})
+        }
+    }catch(error){
+        console.log(error)
+        next(error)
+    }
+})
+
+app.get("/home/vehicle",async(req,res,next)=>{
+    try{
+        const response=await db.query("select * from vehicle_details where user_id=$1",[userId]);
+        if(!response.rowCount){
+            console.log("here")
+            return next(errorHandler(404,"User not found"))
+        }else{
+            res.status(200).json({success:true,data:response.rows[0]})
         }
     }catch(error){
         console.log(error)
