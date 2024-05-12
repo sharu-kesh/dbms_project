@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 function Card({imageUrl,title,text,page}){
     return(
         <div className="card_container">
@@ -5,7 +7,7 @@ function Card({imageUrl,title,text,page}){
             <img className="card-img" src={imageUrl} alt=""  />
             <h2 className="card-title">{title}</h2>
             <p className="card-text">{text}</p>
-            <a href={page}><button>More</button></a>
+            <Link to={page}><button>More</button></Link>
         </div>
         </div>
     )

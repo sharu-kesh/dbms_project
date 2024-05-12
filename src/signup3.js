@@ -1,7 +1,7 @@
 import React ,{useState} from 'react'
 import {useNavigate} from "react-router-dom"
 import axios from 'axios'
-function Signup3() {
+function Signup3({eNo,rDate,vMake,userId,birthDate}) {
     const navigate = useNavigate()
     const [lno,setLno] = useState("")
     const [ino,setIno] = useState("")
@@ -13,14 +13,15 @@ function Signup3() {
 
     async function handleClick(e){
         e.preventDefault()
-        const data={lno,ino,isno,vcover,iprovider,pno}
+        const data={lno,ino,isno,vcover,iprovider,pno,eno:eNo,vmake:vMake,rdate:rDate,userId,dob:birthDate}
         try{
-        const response = await axios.post("http://localhost:5000/user/signup",data)
+        const response = await axios.post("http://localhost:5000/user/signup3",data)
         console.log(response.data)
         if(response.data.success){
             navigate("/signup4")
         }else{
             console.log(response.data.message)
+            setError(response.data.message)
         }
         }catch(error){
             console.log("here")

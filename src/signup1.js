@@ -1,7 +1,7 @@
 import React ,{useState} from 'react'
 import {useNavigate} from "react-router-dom"
 import axios from 'axios'
-function Signup1() {
+function Signup1({setUserId, setEmailAddress, setBirthDate}) {
     const [fname,setFname] = useState("")
     const [lname,setLname] = useState("")
     const [gender,setGender] = useState("")
@@ -15,13 +15,17 @@ function Signup1() {
     async function handleClick(e){
     e.preventDefault()
     const data={fname,lname,gender,phone,address,email,aadhar,dob}
+    setEmailAddress(email)
+    setBirthDate(dob)
     try{
-    const response = await axios.post("http://localhost:5000/user/signup",data)
+    const response = await axios.post("http://localhost:5000/user/signup1",data)
     console.log(response.data)
     if(response.data.success){
+        setUserId(response.data.u_id)
         navigate("/signup2")
     }else{
         console.log(response.data.message)
+        setError(response.data.message)
     }
     }catch(error){
         console.log("here")

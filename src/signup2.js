@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import {useNavigate} from "react-router-dom"
 import axios from 'axios'
-function Signup2() {
+function Signup2({userId,setENo,setRDate,setVMake}) {
     const navigate = useNavigate()
     const [rno,setRno] = useState("")
     const [vmake,setVmake] = useState("")
@@ -13,14 +13,18 @@ function Signup2() {
     const [error,setError] = useState("")
     async function handleClick(e){
         e.preventDefault()
-        const data={rno,rdate,vmake,vmodel,cno,eno,ftype}
+        const data={rno,rdate,vmake,vmodel,cno,ftype,userId}
+        setRDate(rdate)
+        setVMake(vmake)
+        setENo(eno)
         try{
-        const response = await axios.post("http://localhost:5000/user/signup",data)
+        const response = await axios.post("http://localhost:5000/user/signup2",data)
         console.log(response.data)
         if(response.data.success){
             navigate("/signup3")
         }else{
             console.log(response.data.message)
+            setError(response.data.message)
         }
         }catch(error){
             console.log("here")
@@ -42,7 +46,7 @@ function Signup2() {
                 ></input>
             </div>
             <div className="input-box">
-                <input type="text" placeholder='vehicle registered date' onChange={(e)=>setdate(e.target.value)}
+                <input type="date" placeholder='vehicle registered date' onChange={(e)=>setRdate(e.target.value)}
                 required
                 ></input>
             </div>

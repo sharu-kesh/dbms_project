@@ -4,7 +4,7 @@ import { FaLock } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import {useNavigate} from "react-router-dom"
 import axios from "axios"
-export default function User(){
+export default function User({setUserId}){
     const [email,setEmail] = useState("")
     const [password,setPassword] = useState("")
     const navigate = useNavigate()
@@ -16,6 +16,7 @@ async function handleSubmit(e){
     const response = await axios.post("http://localhost:5000/user/login",data)
     console.log(response.data)
     if(response.data.success){
+        setUserId(response.data.data);
         navigate("/home")
     }else{
         console.log(response.data.message)

@@ -1,18 +1,18 @@
 import axios from "axios"
 import { useState,useEffect } from "react";
-export default function Vehicle(){
+export default function Vehicle({userId}){
     const [vehicle,setVehicle] = useState({})
     useEffect(function(){
         async function getVehicle(){
             try {
-                const respon = await axios.get("http://localhost:5000/home/vehicle")
+                const respon = await axios.get(`http://localhost:5000/home/vehicle/${userId}`)
                 setVehicle(respon.data.data)
             } catch (error) {
                 console.log(error)
             }
         }
         getVehicle()
-    },[])
+    },[userId])
     console.log(vehicle)
    
     return(

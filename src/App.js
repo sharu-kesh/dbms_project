@@ -19,26 +19,33 @@ import Owner from './owner'
 import Update from './update'
 
 import {BrowserRouter,Routes,Route} from "react-router-dom"
+import { useState } from 'react'
 function App() {
- 
+  const [userId,setUserId] = useState(null); 
+  const [eNo,setENo] = useState(""); 
+  const [rDate, setRDate] = useState(null);
+  const [vMake,setVMake] = useState("");
+  const [emailAddress, setEmailAddress] = useState("") 
+  const [birthDate,setBirthDate] = useState(null)
+
   return (
     <BrowserRouter>
     <Routes>
       <Route path="/" element={<Login/>}/>
       <Route path="/admin" element={<Admin/>}/>
       <Route path="/home" element={<Home/>}/>
-      <Route path="/vehicle" element={<Vehicle/>}/>
+      <Route path="/vehicle" element={<Vehicle userId={userId}/>}/>
       <Route path="/about" element={<About/>}/>
       <Route path="/insurance" element={<Insurance/>}/>
       <Route path="/pollution" element={<Pollution/>}/>
-      <Route path="/login" element={<Login/>}/>
+      <Route path="/login" element={<Login />}/>
       <Route path="/police" element={<Police/>}/>
-      <Route path="/user" element={<User/>}/>
+      <Route path="/user" element={<User setUserId={setUserId}/>}/>
       <Route path="/home1" element={<Home1/>}/>
-      <Route path="/signup1" element={<Signup1/>}/>
-      <Route path="/signup2" element={<Signup2/>}/>
-      <Route path="/signup3" element={<Signup3/>}/>
-      <Route path="/signup4" element={<Signup4/>}/>
+      <Route path="/signup1" element={<Signup1 setUserId={setUserId} setEmailAddress={setEmailAddress} setBirthDate={setBirthDate}/>}/>
+      <Route path="/signup2" element={<Signup2 userId={userId} setENo={setENo} setRDate={setRDate} setVMake={setVMake}/>}/>
+      <Route path="/signup3" element={<Signup3 userId={userId} eNo={eNo} rDate={rDate} vMake={vMake} birthDate={birthDate}/>}/>
+      <Route path="/signup4" element={<Signup4 userId={userId} emailAddress={emailAddress}/>}/>
       <Route path="/transfer" element={<Transfer/>}/>
       <Route path="/license" element={<License/>}/>
       <Route path="/owner" element={<Owner/>}/>
