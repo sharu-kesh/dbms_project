@@ -9,10 +9,11 @@ function Signup2() {
     const [cno,setCno] = useState("")
     const [eno,setEno] = useState("")
     const [ftype,setFtype] = useState("")
+    const [rdate,setRdate] = useState("")
     const [error,setError] = useState("")
     async function handleClick(e){
         e.preventDefault()
-        const data={rno,vmake,vmodel,cno,eno,ftype}
+        const data={rno,rdate,vmake,vmodel,cno,eno,ftype}
         try{
         const response = await axios.post("http://localhost:5000/user/signup",data)
         console.log(response.data)
@@ -37,6 +38,11 @@ function Signup2() {
             <h5>Vehicle details</h5>
             <div className="input-box">
                 <input type="text" placeholder='Registration number' onChange={(e)=>setRno(e.target.value)}
+                required
+                ></input>
+            </div>
+            <div className="input-box">
+                <input type="text" placeholder='vehicle registered date' onChange={(e)=>setdate(e.target.value)}
                 required
                 ></input>
             </div>

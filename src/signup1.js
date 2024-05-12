@@ -48,7 +48,7 @@ function Signup1() {
                 ></input>
             </div>
             <div className="input-box">
-                <input type="text" placeholder='gender(M/F/O)' onChange={(e)=>setGender(e.target.value)}
+                <input type="text" placeholder='gender' onChange={(e)=>setGender(e.target.value)}
                 required
                 ></input>
             </div>
