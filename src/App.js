@@ -17,7 +17,11 @@ import Transfer from './transfer'
 import License from './License'
 import Owner from './owner'
 import Update from './update'
-
+import Police_home from './police_home'
+import Police_vehicle from './police_vehicle'
+import Home_police from './home_police'
+import Found from './found'
+import Lost from './lost'
 import {BrowserRouter,Routes,Route} from "react-router-dom"
 import { useState } from 'react'
 function App() {
@@ -27,6 +31,7 @@ function App() {
   const [vMake,setVMake] = useState("");
   const [emailAddress, setEmailAddress] = useState("") 
   const [birthDate,setBirthDate] = useState(null)
+  const [vrno,setVrno]=useState("")
 
   return (
     <BrowserRouter>
@@ -36,8 +41,8 @@ function App() {
       <Route path="/home" element={<Home/>}/>
       <Route path="/vehicle" element={<Vehicle userId={userId}/>}/>
       <Route path="/about" element={<About/>}/>
-      <Route path="/insurance" element={<Insurance/>}/>
-      <Route path="/pollution" element={<Pollution/>}/>
+      <Route path="/insurance" element={<Insurance userId={userId}/>}/>
+      <Route path="/pollution" element={<Pollution userId={userId}/>}/>
       <Route path="/login" element={<Login />}/>
       <Route path="/police" element={<Police/>}/>
       <Route path="/user" element={<User setUserId={setUserId}/>}/>
@@ -47,12 +52,14 @@ function App() {
       <Route path="/signup3" element={<Signup3 userId={userId} eNo={eNo} rDate={rDate} vMake={vMake} birthDate={birthDate}/>}/>
       <Route path="/signup4" element={<Signup4 userId={userId} emailAddress={emailAddress}/>}/>
       <Route path="/transfer" element={<Transfer/>}/>
-      <Route path="/license" element={<License/>}/>
-      <Route path="/owner" element={<Owner/>}/>
+      <Route path="/license" element={<License userId={userId}/>}/>
+      <Route path="/owner" element={<Owner userId={userId}/>}/>
       <Route path="/update" element={<Update/>}/>
-
-
-
+      <Route path="/police_home" element={<Police_home/>}/>
+      <Route path="/police_vehicle" element={<Police_vehicle/>}/>
+      <Route path="/home_police" element={<Home_police/>}/>
+      <Route path="/found" element={<Found/>}/>
+      <Route path="/lost" element={<Lost/>}/>
 
     </Routes>
     </BrowserRouter>

@@ -1,7 +1,9 @@
 import axios from "axios"
 import { useState,useEffect } from "react";
 export default function Vehicle({userId}){
-    const [vehicle,setVehicle] = useState({})
+    const [vehicle,setVehicle] = useState({
+        registration_date:new Date()
+    })
     useEffect(function(){
         async function getVehicle(){
             try {
@@ -14,7 +16,8 @@ export default function Vehicle({userId}){
         getVehicle()
     },[userId])
     console.log(vehicle)
-   
+   const redate=new Date(vehicle.registration_date);
+   var dateString=redate.toJSON().split('T')[0];
     return(
         
         <>
@@ -24,6 +27,10 @@ export default function Vehicle({userId}){
                 <div className="pinput_box">
             <label htmlFor="rno">Registration Number</label>
             <input type="text"  value={vehicle.registration_no}/>
+            </div>
+            <div className="pinput_box">
+            <label htmlFor="rno">Registration Date</label>
+            <input type="text"  value={dateString}/>
             </div>
             <div className="pinput_box"> 
             <label htmlFor="cno">Chassis Number</label>
