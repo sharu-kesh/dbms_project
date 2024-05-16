@@ -161,6 +161,23 @@ app.get("/home/vehicle/:id",async(req,res,next)=>{
     }
 })
 
+app.get("/home/vehicle/:id",async(req,res,next)=>{
+    userId = req.params.id;
+    try{
+        const response=await db.query("select * from vehicle_details where user_id=$1",[userId]);
+        if(!response.rowCount){
+            console.log("here")
+            return next(errorHandler(404,"User not found"))
+        }else{
+            res.status(200).json({success:true,data:response.rows[0]})
+        }
+    }catch(error){
+        console.log(error)
+        next(error)
+    }
+})
+
+
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500;
     const message = err.message || "Internal Server Error";
