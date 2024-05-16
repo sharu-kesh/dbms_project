@@ -136,7 +136,6 @@ app.post("/user/login",async(req,res,next)=>{
         }else{
             const validPwd = password === response.rows[0].pass_word;
             if(!validPwd) return next(errorHandler(401,"Wrong credentials"))
-                console.log("wtf")
             res.status(200).json({success:true, data:response.rows[0].user_id})
         }
     }catch(error){
@@ -145,21 +144,25 @@ app.post("/user/login",async(req,res,next)=>{
     }
 })
 
-app.get("/home/vehicle/:id",async(req,res,next)=>{
-    userId = req.params.id;
+app.post("/police/login",async(req,res,next)=>{
+    console.log(req.body)
+    const {stationid,police_password}=req.body
     try{
-        const response=await db.query("select * from vehicle_details where user_id=$1",[userId]);
+        const response=await db.query("select * from police where station_id=$1",[stationid]);
         if(!response.rowCount){
             console.log("here")
             return next(errorHandler(404,"User not found"))
         }else{
-            res.status(200).json({success:true,data:response.rows[0]})
+            const validPwd = police_password === response.rows[0].password;
+            if(!validPwd) return next(errorHandler(401,"Wrong credentials"))
+            res.status(200).json({success:true, data:response.rows[0].user_id})
         }
     }catch(error){
         console.log(error)
         next(error)
     }
 })
+
 
 app.get("/home/vehicle/:id",async(req,res,next)=>{
     userId = req.params.id;
@@ -177,6 +180,79 @@ app.get("/home/vehicle/:id",async(req,res,next)=>{
     }
 })
 
+<<<<<<< HEAD
+app.get("/home/vehicle/:id",async(req,res,next)=>{
+    userId = req.params.id;
+    try{
+        const response=await db.query("select * from vehicle_details where user_id=$1",[userId]);
+=======
+app.get("/home/insurance/:id",async(req,res,next)=>{
+    userId = req.params.id;
+    try{
+        const response=await db.query("select insurance.insurance_no,issue_date,exp_date,scheme_no,vehicle_coverage,ins_provider from insurance , documents where documents.user_id=$1 and documents.insurance_no=insurance.insurance_no",[userId]);
+>>>>>>> b33b4b15ef22e1531011531d21f50eecbda57a4a
+        if(!response.rowCount){
+            console.log("here")
+            return next(errorHandler(404,"User not found"))
+        }else{
+            res.status(200).json({success:true,data:response.rows[0]})
+        }
+    }catch(error){
+        console.log(error)
+        next(error)
+    }
+})
+
+<<<<<<< HEAD
+=======
+app.get("/home/pollution/:id",async(req,res,next)=>{
+    userId = req.params.id;
+    try{
+        const response=await db.query("select pollution_cer.pollution_cer_no,issue_date,validation,pollution_cer.vehicle_make,vehicle_model from pollution_cer,documents,vehicle_details where documents.user_id=$1 and documents.pollution_cer_no=pollution_cer.pollution_cer_no and vehicle_details.user_id=$1",[userId]);
+        if(!response.rowCount){
+            console.log("here")
+            return next(errorHandler(404,"User not found"))
+        }else{
+            res.status(200).json({success:true,data:response.rows[0]})
+        }
+    }catch(error){
+        console.log(error)
+        next(error)
+    }
+})
+
+app.get("/home/licence/:id",async(req,res,next)=>{
+    userId = req.params.id;
+    try{
+        const response=await db.query("select licence.licence_no,issue_date,exp_date from licence,documents where documents.user_id=$1 and documents.licence_no=licence.licence_no",[userId]);
+        if(!response.rowCount){
+            console.log("here")
+            return next(errorHandler(404,"User not found"))
+        }else{
+            res.status(200).json({success:true,data:response.rows[0]})
+        }
+    }catch(error){
+        console.log(error)
+        next(error)
+    }
+})
+
+app.get("/home/owner/:id",async(req,res,next)=>{
+    userId = req.params.id;
+    try{
+        const response=await db.query("select concat(concat(fname,' '),lname) as fullName,phone_no,address,aadhar_no,gender,email from user_details,users where user_details.user_id=$1 and users.user_id=$1",[userId]);
+        if(!response.rowCount){
+            console.log("here")
+            return next(errorHandler(404,"User not found"))
+        }else{
+            res.status(200).json({success:true,data:response.rows[0]})
+        }
+    }catch(error){
+        console.log(error)
+        next(error)
+    }
+})
+>>>>>>> b33b4b15ef22e1531011531d21f50eecbda57a4a
 
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500;

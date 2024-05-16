@@ -9,12 +9,14 @@ export default function User({setUserId}){
     const [password,setPassword] = useState("")
     const navigate = useNavigate()
     const [error,setError] = useState("")
+    const [isLoggedin, setIsLoggedin] = useState(false);
+
 async function handleSubmit(e){
     e.preventDefault()
     const data={email,password}
     try{
     const response = await axios.post("http://localhost:5000/user/login",data)
-    console.log(response.data)
+    //console.log(response.data)
     if(response.data.success){
         setUserId(response.data.data);
         navigate("/home")

@@ -168,12 +168,12 @@ background-image: linear-gradient(316deg, #50d8d7 0%, #923993 74%);
     
 }
 .pcontainer form{
-    border: 1px solid black;
-    border-radius: 15px; /* Adjust border radius as needed */
+    border: 0.5px solid black;
+    border-radius: 10px; /* Adjust border radius as needed */
     background-color: rgba(255, 255, 255, 0.12); /* Adjust background color and opacity */
     backdrop-filter: blur(10px); /* Adjust blur intensity as needed */
     box-shadow: 0 8px 32px 0 rgba(4, 5, 24, 0.37);
-    padding:20px;
+    padding:10px;
 }
 
 .pcontainer .pinput_box{
@@ -185,10 +185,13 @@ background-image: linear-gradient(316deg, #50d8d7 0%, #923993 74%);
 }
 
 .pinput_box input{
-    font-size: 30px;
+    font-size: 24px;
     color: #333;
     margin-top:20px;
-    border-radius: 15px;
+    border-radius: 10px;
+    padding:8px;
+    font-weight: 520;
+    font-family: 'Times New Roman', Times, serif;
 }
 .p{
     background: url('./pceert2.jpg');
@@ -240,6 +243,55 @@ background-image: linear-gradient(316deg, #50d8d7 0%, #923993 74%);
     display: flex;
     flex-direction: column;
 }
+.o input[type="text"]{
+    font-size: 27px;
+    min-height:30px;
+    width:400px;
+    padding:5px
+
+}
+.v input[type="text"]{
+    font-size: 27px;
+    min-height:30px;
+    width:300px;
+    padding:5px
+
+}
+.p input[type="text"]{
+    font-size: 27px;
+    min-height:30px;
+    width:400px;
+    padding:5px
+
+}
+.l input[type="text"]{
+    font-size: 27px;
+    min-height:30px;
+    width:250px;
+    padding:5px
+
+}
+.i input[type="text"]{
+    font-size: 27px;
+    min-height:30px;
+    width:300px;
+    padding:5px
+
+}
+.u input[type="text"]{
+    font-size: 27px;
+    min-height:30px;
+    width:300px;
+    padding:5px
+
+}
+.u input[type="email"]{
+    font-size: 27px;
+    min-height:30px;
+    width:300px;
+    padding:5px
+
+}
 .u button{
     justify-content: center;
     align-items: center;
@@ -257,4 +309,53 @@ background-image: linear-gradient(316deg, #50d8d7 0%, #923993 74%);
     background-size: cover;
     background-size: 50% 100%; /* Set background size to 50% width and 100% height */
     background-position: left;
+}
+.police_bg img{
+    min-height: 100vh;
+    margin: 0 auto;
+    padding:0;
+    display: flex;
+}
+.police_reg{
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    min-height: 100vh;
+    min-width: 100%;
+    background: url('./police.jpeg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.police_reg h2{
+    font-size: 40px;
+}
+.police_reg input{
+    margin:30px 60px;
+    font-size: 30px;
+}
+.police_reg text{
+    font-size: 25px;
+    color:black
+}
+.police_reg form{
+    padding:10px;
+    border: 0.5px solid black;
+    border-radius: 10px; /* Adjust border radius as needed */
+    background-color: rgba(255, 255, 255, 0.3); /* Adjust background color and opacity */
+    backdrop-filter: blur(10px); /* Adjust blur intensity as needed */
+    box-shadow: 0 8px 32px 0 rgba(4, 5, 24, 0.37);
+    padding:10px;
+}
+.police_reg form button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin:0 auto;
+    padding: 20px;
+    font-weight: 300px;
+    font-size: 20px;
+    background-color: blue;
+    color: #fff;
+    border-radius: 50px;
+    border: 1px solid black;
 }
