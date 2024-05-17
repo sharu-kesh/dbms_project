@@ -19,8 +19,6 @@ import Update from './update'
 import Police_home from './police_home'
 import Police_vehicle from './police_vehicle'
 import Home_police from './home_police'
-import Found from './found'
-import Lost from './lost'
 import {BrowserRouter,Routes,Route} from "react-router-dom"
 import { useState } from 'react'
 function App() {
@@ -57,8 +55,6 @@ function App() {
       <Route path="/police/police_home" element={<Police_home/>}/>
       <Route path="/police/police_home/police_vehicle" element={<Police_vehicle/>}/>
       <Route path="/police/police_home/police_vehicle/home_police" element={<Home_police/>}/>
-      <Route path="/police/police_home/found" element={<Found/>}/>
-      <Route path="/police/police_home/lost" element={<Lost/>}/>
     </Routes>
     </BrowserRouter>
     
