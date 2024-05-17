@@ -19,6 +19,7 @@ function Nav(){
                     </div>
                 </li>
                 </div>
+                <li><Link to="/complaint">Complaint</Link></li>
                 <li><a href='/'>Logout</a></li>
             </ul>
         </nav>

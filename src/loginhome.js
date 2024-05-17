@@ -14,7 +14,7 @@ export default function Loginhome(){
         <ul>
         <div class="vertical-line"></div>
             <li><Link to="/Admin">Admin</Link></li>
-            <li><Link to="/Police">Police</Link></li>
+            <li><Link to="/police">Police</Link></li>
             <li><Link to="/User">User</Link></li>
             <li> <a href="/About">About Us</a></li>
         </ul>

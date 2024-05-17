@@ -17,7 +17,7 @@ export default function Police(){
         const response = await axios.post("http://localhost:5000/police/login",data)
         console.log(response.data)
         if(response.data.success){
-            navigate("./police_home")
+            navigate("/police/police_home")
         }else{
             console.log(response.data.message)
             setError(response.data.message)

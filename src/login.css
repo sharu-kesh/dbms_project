@@ -408,3 +408,89 @@ background-image: linear-gradient(316deg, #50d8d7 0%, #923993 74%);
     color: #fff;
     background-color: blue;
 }
+.complaint{
+    border:2px solid black;
+    margin:0 auto;
+    min-height:100px;
+    /* background: #30cfd0; */
+    border-radius: 30px;
+    margin:15px
+}
+.right_wrong{
+    align-items: center;
+    display: flex;
+    float: right;
+    margin-top: 30px;
+    padding: 7.5px;
+    justify-content: space-around;
+}
+.complaintt{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: full;
+    justify-content: center;
+    align-items: center;
+}
+.complaintt .complaintForm{
+    border: 1px solid black;
+    padding:20px;
+    border-radius: 15px;
+}
+
+.complaintTitle{
+    border:1px solid black;
+    border-radius: 15px;
+    padding:10px;
+    align-items: center;
+    text-align: center;
+    width:900px;
+    font-size: 30px;
+}
+.complaintTable{
+    border: 1px solid black;
+    width:900px;
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    /* text-align: center; */
+    padding: 20px;
+    margin:0 auto;
+    border-radius: 15px;
+}
+.complaintTable table{
+    width:450px;
+}
+.complaintTable table thead{
+    background: rgb(47, 159, 204);
+    font-size: 25px;
+    padding:5px;
+    text-align: center;
+}
+.complaintTable table tr:nth-child(odd){
+    background-color: #D6EEEE;
+}
+.complaintTable input,textarea,select{
+    float: right;
+    padding:10px;
+}
+.complaintTable textarea{
+    height:100px;
+    width:300px;
+    font-size: 15px;
+}
+.complaintButton{
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+    /* text-align: center; */
+    margin:10px;
+   
+}
+.complaintButton button{
+    background: blue;
+    border-radius: 15px;
+    padding:9px;
+    font-size: 20px;
+    color: #fff;
+}

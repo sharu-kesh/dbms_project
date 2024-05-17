@@ -19,6 +19,7 @@ import Update from './update'
 import Police_home from './police_home'
 import Police_vehicle from './police_vehicle'
 import Home_police from './home_police'
+import Complaint from "./complaint"
 import {BrowserRouter,Routes,Route} from "react-router-dom"
 import { useState } from 'react'
 function App() {
@@ -38,6 +39,7 @@ function App() {
       <Route path="/home" element={<Home/>}/>
       <Route path="/vehicle" element={<Vehicle/>}/>
       <Route path="/about" element={<About/>}/>
+      <Route path="/complaint" element={<Complaint/>}/>
       <Route path="/insurance" element={<Insurance userId={userId}/>}/>
       <Route path="/pollution" element={<Pollution userId={userId}/>}/>
       <Route path="/login" element={<Login />}/>
