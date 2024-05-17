@@ -39,7 +39,7 @@ function App() {
       <Route path="/" element={<Login/>}/>
       <Route path="/admin" element={<Admin/>}/>
       <Route path="/home" element={<Home/>}/>
-      <Route path="/vehicle" element={<Vehicle userId={userId}/>}/>
+      <Route path="/vehicle" element={<Vehicle/>}/>
       <Route path="/about" element={<About/>}/>
       <Route path="/insurance" element={<Insurance userId={userId}/>}/>
       <Route path="/pollution" element={<Pollution userId={userId}/>}/>
@@ -54,7 +54,7 @@ function App() {
       <Route path="/transfer" element={<Transfer/>}/>
       <Route path="/license" element={<License userId={userId}/>}/>
       <Route path="/owner" element={<Owner userId={userId}/>}/>
-      <Route path="/update" element={<Update/>}/>
+      <Route path="/update" element={<Update userId={userId}/>}/>
       <Route path="/police_home" element={<Police_home/>}/>
       <Route path="/police_vehicle" element={<Police_vehicle/>}/>
       <Route path="/home_police" element={<Home_police/>}/>

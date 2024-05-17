@@ -1,12 +1,26 @@
 const express = require("express")
+const session = require("express-session")
 const cors=require("cors")
 const app=express()
 const path=require("path")
 require('dotenv').config()
 const pg = require("pg")
 const { log } = require("console")
+const { CgLayoutGrid } = require("react-icons/cg")
+const cookieParser = require("cookie-parser")
 // const errorHandler= require("./utils.js")
 let { PGHOST, PGDATABASE, PGUSER, PGPASSWORD } = process.env;
+app.use(cookieParser())
+app.use(
+    session(
+        {
+            secret : "key",
+            resave : true,
+            saveUninitialized : true,
+            sameSite: 'lax',
+        }
+    )
+);
 
 function errorHandler(statusCode, message) {
     const error = new Error();
@@ -37,7 +51,10 @@ const db=new pg.Client({
 let u_id;
 db.connect()
 app.use(express.urlencoded({extended:true}))
-app.use(cors())
+app.use(cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+}))
 app.use(express.json())
 app.post("/user/signup1",async (req,res,next)=>{
     const {fname,lname,gender,phone,address,email,aadhar,dob} = req.body;
@@ -136,6 +153,8 @@ app.post("/user/login",async(req,res,next)=>{
         }else{
             const validPwd = password === response.rows[0].pass_word;
             if(!validPwd) return next(errorHandler(401,"Wrong credentials"))
+            req.session.user = {id:response.rows[0].user_id};
+            console.log(req.session.user)
             res.status(200).json({success:true, data:response.rows[0].user_id})
         }
     }catch(error){
@@ -164,8 +183,9 @@ app.post("/police/login",async(req,res,next)=>{
 })
 
 
-app.get("/home/vehicle/:id",async(req,res,next)=>{
-    userId = req.params.id;
+app.get("/home/vehicle",async(req,res,next)=>{
+    userId = req.session.user.id;
+    // console.log("user id: ", req.session)
     try{
         const response=await db.query("select * from vehicle_details where user_id=$1",[userId]);
         if(!response.rowCount){
@@ -180,17 +200,13 @@ app.get("/home/vehicle/:id",async(req,res,next)=>{
     }
 })
 
-<<<<<<< HEAD
-app.get("/home/vehicle/:id",async(req,res,next)=>{
-    userId = req.params.id;
-    try{
-        const response=await db.query("select * from vehicle_details where user_id=$1",[userId]);
-=======
+
+
 app.get("/home/insurance/:id",async(req,res,next)=>{
     userId = req.params.id;
     try{
         const response=await db.query("select insurance.insurance_no,issue_date,exp_date,scheme_no,vehicle_coverage,ins_provider from insurance , documents where documents.user_id=$1 and documents.insurance_no=insurance.insurance_no",[userId]);
->>>>>>> b33b4b15ef22e1531011531d21f50eecbda57a4a
+
         if(!response.rowCount){
             console.log("here")
             return next(errorHandler(404,"User not found"))
@@ -203,8 +219,6 @@ app.get("/home/insurance/:id",async(req,res,next)=>{
     }
 })
 
-<<<<<<< HEAD
-=======
 app.get("/home/pollution/:id",async(req,res,next)=>{
     userId = req.params.id;
     try{
@@ -252,7 +266,32 @@ app.get("/home/owner/:id",async(req,res,next)=>{
         next(error)
     }
 })
->>>>>>> b33b4b15ef22e1531011531d21f50eecbda57a4a
+
+app.post("/user/login/update",async(req,res,next)=>{
+    console.log(req.body)
+    const {oldPhoneNo,oldEmail}=req.body
+    try{
+        const response=await db.query("select u.email,ud.phone_no from users u,user_details ud where u.user_id=$1 and ud.user_id = $1",[userId]);
+        if(!response.rowCount){
+            console.log("here")
+            return next(errorHandler(404,"User not found"))
+        }else{
+            const validEmail = oldEmail === response.rows[0].email;
+            const validPhoneNo = oldPhoneNo === response.rows[0].phone_no;
+            if(validEmail && validPhoneNo)
+                {
+                    const response1 = await db.query("update users user_id = $1",[userId]);
+                    const response2 = await db.query("select u.email,ud.phone_no from users u,user_details ud where u.user_id=$1 and ud.user_id = $1",[userId]);
+                }
+            res.status(200).json({success:true})
+        }
+    }catch(error){
+        console.log(error)
+        next(error)
+    }
+})
+
+
 
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500;
