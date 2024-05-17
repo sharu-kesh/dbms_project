@@ -1,7 +1,6 @@
 import React from 'react'
 import './login.css'
 import { FaUser,FaLock } from "react-icons/fa";
-import { MdEmail } from "react-icons/md";
 import {useNavigate} from "react-router-dom"
 import axios from "axios"
 import { useEffect, useState } from 'react'
@@ -18,7 +17,7 @@ export default function Police(){
         const response = await axios.post("http://localhost:5000/police/login",data)
         console.log(response.data)
         if(response.data.success){
-            navigate("/police_home")
+            navigate("./police_home")
         }else{
             console.log(response.data.message)
             setError(response.data.message)
@@ -48,6 +47,7 @@ export default function Police(){
                 <FaLock className='icon'/>
             </div>
             <input type='submit' className="submit" value="Login" />
+            {error && <p id="err">{error}</p>}
         </form>
     </div>
     </div>

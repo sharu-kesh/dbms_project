@@ -1,4 +1,3 @@
-import Nav from './nav'
 import Home from "./Home"
 import Vehicle from "./Vehicle"
 import About from "./About"
@@ -55,11 +54,11 @@ function App() {
       <Route path="/license" element={<License userId={userId}/>}/>
       <Route path="/owner" element={<Owner userId={userId}/>}/>
       <Route path="/update" element={<Update/>}/>
-      <Route path="/police_home" element={<Police_home/>}/>
-      <Route path="/police_vehicle" element={<Police_vehicle/>}/>
-      <Route path="/home_police" element={<Home_police/>}/>
-      <Route path="/found" element={<Found/>}/>
-      <Route path="/lost" element={<Lost/>}/>
+      <Route path="/police/police_home" element={<Police_home/>}/>
+      <Route path="/police/police_home/police_vehicle" element={<Police_vehicle/>}/>
+      <Route path="/police/police_home/police_vehicle/home_police" element={<Home_police/>}/>
+      <Route path="/police/police_home/found" element={<Found/>}/>
+      <Route path="/police/police_home/lost" element={<Lost/>}/>
 
     </Routes>
     </BrowserRouter>

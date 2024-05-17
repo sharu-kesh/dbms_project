@@ -310,11 +310,18 @@ background-image: linear-gradient(316deg, #50d8d7 0%, #923993 74%);
     background-size: 50% 100%; /* Set background size to 50% width and 100% height */
     background-position: left;
 }
-.police_bg img{
+.police_bg{
     min-height: 100vh;
     margin: 0 auto;
     padding:0;
-    display: flex;
+    font-size: 30px;
+}
+.police_bg h2{
+    padding:30px;
+}
+.police_bg li{
+    padding:30px;
+    font-family:Verdana, Geneva, Tahoma, sans-serif
 }
 .police_reg{
     display: flex;
@@ -322,20 +329,24 @@ background-image: linear-gradient(316deg, #50d8d7 0%, #923993 74%);
     align-items: center; 
     min-height: 100vh;
     min-width: 100%;
-    background: url('./police.jpeg');
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%);
 }
 .police_reg h2{
     font-size: 40px;
+    text-align: center;
+    align-items: center;
+    padding:5px;
 }
 .police_reg input{
     margin:30px 60px;
-    font-size: 30px;
+    font-size: 40px;
+    border-radius: 10px;
+    width:400px;
+    padding:10px
 }
-.police_reg text{
-    font-size: 25px;
-    color:black
+.police_reg input[type="text"]{
+    font-size: 30px;
+    color:#333
 }
 .police_reg form{
     padding:10px;
@@ -358,4 +369,42 @@ background-image: linear-gradient(316deg, #50d8d7 0%, #923993 74%);
     color: #fff;
     border-radius: 50px;
     border: 1px solid black;
+}
+.div{
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: auto;
+    min-width: 100%;
+    display: flex;
+    background: slateblue;
+
+}
+.police_div{
+    padding:10px;
+    border: 0.5px solid black;
+    border-radius: 10px; /* Adjust border radius as needed */
+    background-color: rgba(255, 255, 255, 0.3); /* Adjust background color and opacity */
+    backdrop-filter: blur(10px); /* Adjust blur intensity as needed */
+    box-shadow: 0 8px 32px 0 rgba(4, 5, 24, 0.37);
+    padding:10px;
+    font-size: 40px;
+   
+}
+.police_check{
+    text-align: center;
+}
+.police_field{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    margin: 10px;
+}
+.police_div button{
+    border-radius: 50px;
+    padding:5px;
+    margin:10px;
+    font-size: 27px;
+    color: #fff;
+    background-color: blue;
 }

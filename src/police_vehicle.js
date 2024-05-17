@@ -10,7 +10,7 @@ function Police_vehicle() {
         const response = await axios.post("http://localhost:5000/police/login/vehicle",data)
         console.log(response.data)
         if(response.data.success){
-            navigate("/home_police")
+            navigate("./home_police")
         }else{
             console.log(response.data.message)
             setError(response.data.message)

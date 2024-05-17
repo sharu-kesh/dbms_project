@@ -1,7 +1,5 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
 import image from './images-removebg-preview.jpg'
-import police_image from './police.jpeg'
 function Police_home() {
   return (
     <div>
@@ -12,15 +10,10 @@ function Police_home() {
         </p>
         <ul>
         <div class="vertical-line"></div>
-            <li><Link to="/police_vehicle">Vehicle Details</Link></li>
-            <li><Link to="/found">Found Vehicles</Link></li>
-            <li><Link to="/lost">Lost Vehicles</Link></li>
+            <li><Link to="/police/police_home/police_vehicle">Vehicle Details</Link></li>
             <li><Link to="/">Log Out</Link></li>
         </ul>
     </nav>
-    <div className="police_bg">
-        <img src={police_image} alt="" />
-    </div>
     </div>
   )
 }
