@@ -38,7 +38,7 @@ function App() {
       <Route path="/" element={<Login/>}/>
       <Route path="/admin" element={<Admin/>}/>
       <Route path="/home" element={<Home/>}/>
-      <Route path="/vehicle" element={<Vehicle userId={userId}/>}/>
+      <Route path="/vehicle" element={<Vehicle/>}/>
       <Route path="/about" element={<About/>}/>
       <Route path="/insurance" element={<Insurance userId={userId}/>}/>
       <Route path="/pollution" element={<Pollution userId={userId}/>}/>
@@ -59,7 +59,6 @@ function App() {
       <Route path="/police/police_home/police_vehicle/home_police" element={<Home_police/>}/>
       <Route path="/police/police_home/found" element={<Found/>}/>
       <Route path="/police/police_home/lost" element={<Lost/>}/>
-
     </Routes>
     </BrowserRouter>
     

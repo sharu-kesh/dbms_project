@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useState,useEffect } from "react";
+axios.defaults.withCredentials = true;
 export default function Vehicle({userId}){
     const [vehicle,setVehicle] = useState({
         registration_date:new Date()
@@ -7,7 +8,7 @@ export default function Vehicle({userId}){
     useEffect(function(){
         async function getVehicle(){
             try {
-                const respon = await axios.get(`http://localhost:5000/home/vehicle/${userId}`)
+                const respon = await axios.get(`http://localhost:5000/home/vehicle`)
                 setVehicle(respon.data.data)
             } catch (error) {
                 console.log(error)
