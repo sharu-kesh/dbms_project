@@ -21,7 +21,7 @@ function Signup2({userId,setENo,setRDate,setVMake}) {
         const response = await axios.post("http://localhost:5000/user/signup2",data)
         console.log(response.data)
         if(response.data.success){
-            navigate("/signup3")
+            navigate("/user/signup1/signup2/signup3")
         }else{
             console.log(response.data.message)
             setError(response.data.message)

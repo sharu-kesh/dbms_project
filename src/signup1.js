@@ -22,7 +22,7 @@ function Signup1({setUserId, setEmailAddress, setBirthDate}) {
     console.log(response.data)
     if(response.data.success){
         setUserId(response.data.u_id)
-        navigate("/signup2")
+        navigate("/user/signup1/signup2")
     }else{
         console.log(response.data.message)
         setError(response.data.message)

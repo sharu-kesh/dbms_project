@@ -57,7 +57,7 @@ useEffect(function(){
             </div>
             <input type='submit' className="submit" value='Login'
             />
-            <p>Don't have an account?  <span onClick={()=>navigate("/signup1")} style={{color:"white",fontSize:"20px",cursor:"pointer"}}>Register</span></p>
+            <p>Don't have an account?  <span onClick={()=>navigate("/user/signup1")} style={{color:"white",fontSize:"20px",cursor:"pointer"}}>Register</span></p>
         </form>
         {error && <p id="err">{error}</p>}
 

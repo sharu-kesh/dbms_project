@@ -112,8 +112,8 @@ app.post("/user/signup3",async (req,res,next)=>{
         ,[lno,licenceDate,expire])
         await db.query("INSERT INTO pollution_cer(pollution_cer_no,issue_date,validation,vehicle_make,engine_no) VALUES($1,$2,$3,$4,$5)"
         ,[pno,issue,monthsString,vmake,eno])
-        await db.query("INSERT INTO insurance(insurance_no,issue_date,exp_date,scheme_no,vehicle_coverage,ins_provider) VALUES($1,$2,$3,$4,$5,$6)"
-    ,[ino,iIssue,expiryDate,isno,vcover,iprovider])
+        await db.query("INSERT INTO insurance(insurance_no,issue_date,exp_date,scheme_no,ins_provider) VALUES($1,$2,$3,$4,$5)"
+    ,[ino,iIssue,expiryDate,isno,iprovider])
         res.status(200).json({success:true,message:"All values inserted successfully"})
         await db.query("INSERT INTO documents(user_id,licence_no,insurance_no,pollution_cer_no) VALUES($1,$2,$3,$4)"
     ,[userId,lno,ino,pno])
@@ -135,6 +135,21 @@ app.post("/user/signup4",async (req,res,next)=>{
     try{
         const response = await db.query("INSERT INTO users(user_id,email,pass_word) VALUES($1,$2,$3)"
     ,[userId,email,password])
+    res.status(200).json({success:true,message:"Values entered successfully"})
+    }
+    catch(err){
+        next(err);
+    }
+
+})
+app.post("/user/complaint",async (req,res,next)=>{
+    const {cname,gender,dob,address,mobile,mail,mdate,place,descr} = req.body;
+    console.log(req.body);
+    if(!cname || !gender || !dob || !address || !mobile || !mobile || !mail || !mdate || !place || !descr){
+        return next(errorHandler(423,"Please provide all credentials properly"))
+    }
+    
+    try{
     res.status(200).json({success:true,message:"Values entered successfully"})
     }
     catch(err){
@@ -205,7 +220,7 @@ app.get("/home/vehicle",async(req,res,next)=>{
 app.get("/home/insurance/:id",async(req,res,next)=>{
     userId = req.params.id;
     try{
-        const response=await db.query("select insurance.insurance_no,issue_date,exp_date,scheme_no,vehicle_coverage,ins_provider from insurance , documents where documents.user_id=$1 and documents.insurance_no=insurance.insurance_no",[userId]);
+        const response=await db.query("select insurance.insurance_no,issue_date,exp_date,scheme_no,ins_provider from insurance , documents where documents.user_id=$1 and documents.insurance_no=insurance.insurance_no",[userId]);
 
         if(!response.rowCount){
             console.log("here")

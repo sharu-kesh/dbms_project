@@ -494,3 +494,11 @@ background-image: linear-gradient(316deg, #50d8d7 0%, #923993 74%);
     font-size: 20px;
     color: #fff;
 }
+#succ{
+    text-align: center;
+    align-items: center;
+    font-size: 25px;
+    color:white;
+    background: green;
+    border-radius: 15px;
+}

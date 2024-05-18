@@ -48,10 +48,6 @@ export default function Insurance({userId}){
             <label htmlFor="EDate">Expiry Date</label>
             <input type="text" value={expe}/>
             </div>
-            <div className="pinput_box">
-            <label htmlFor="vcover">Vehicle coverage</label>
-            <input type="text" value={insurance.vehicle_coverage + " km"}/>
-            </div>
             </form>
         </div>
         </div>
