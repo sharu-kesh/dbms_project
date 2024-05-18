@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import {useState,useRef} from 'react';
 import axios from 'axios';
+axios.defaults.withCredentials = true;
 function Complaint() {
     const [cname,setCname]=useState("");
     const [gender,setGender]=useState("");
@@ -41,7 +42,7 @@ function Complaint() {
         fmdate.current.value="";
 
         setSuccess("Your response has been recorded!");
-        navigate("/complaint")
+        navigate("/home")
     }else{
         console.log(response.data.message)
         setError(response.data.message)

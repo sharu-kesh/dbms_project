@@ -62,21 +62,33 @@ app.post("/user/signup1",async (req,res,next)=>{
         return next(errorHandler(423,"Please provide all credentials properly"))
     }
     try{
+        req.session.user = {email :email}
+        req.session.user.dob =   dob
     await db.query("INSERT INTO user_details(fname,lname,phone_no,dob,address,aadhar_no,gender) VALUES($1,$2,$3,$4,$5,$6,$7)"
     ,[fname,lname,phone,dob,address,aadhar,gender])
     u_id = (await db.query("Select user_id from user_details where aadhar_no=$1",[aadhar])).rows[0].user_id
-    res.status(200).json({success:true,u_id,message:"Values entered successfully"})
+    req.session.user.id = u_id
+    console.log(req.session.user)
+    res.status(200).json({success:true,message:"Values entered successfully"})
+
     }
     catch(err){
+        console.log(err)
         next(err);
     }
 })
 app.post("/user/signup2",async (req,res,next)=>{
-    const {rno,rdate,vmake,vmodel,cno,ftype,userId} = req.body;
+    const {rno,rdate,vmake,vmodel,cno,ftype,eno} = req.body;
+    console.log(req.body)
+    const userId = req.session.user.id
     try{
-        if( !rno || !ftype || !cno || !vmake || !vmodel || !rdate){
+        if( !rno || !ftype || !cno || !vmake || !vmodel || !rdate || !eno){
             return next(errorHandler(423,"Please provide all credentials properly"))
         }
+    req.session.user.rDate = rdate
+    req.session.user.vMake = vmake
+    req.session.user.cNo = cno
+    req.session.user.eNo = eno
     await db.query("INSERT INTO vehicle_details(user_id,registration_no,fuel_type,vin,vehicle_make,vehicle_model,registration_date) VALUES($1,$2,$3,$4,$5,$6,$7    )"
     ,[userId,rno,ftype,cno,vmake,vmodel,rdate])
     res.status(200).json({success:true,message:"Values entered successfully"})
@@ -86,9 +98,14 @@ app.post("/user/signup2",async (req,res,next)=>{
     }
 })
 app.post("/user/signup3",async (req,res,next)=>{
-    const {lno,ino,isno,vcover,iprovider,pno,eno,vmake,rdate,userId,dob} = req.body
+    const {lno,ino,isno,iprovider,pno} = req.body
+    const userId = req.session.user.id
+    const eno = req.session.user.eNo
+    const vmake = req.session.user.vMake
+    const rdate = req.session.user.rDate
+    const dob = req.session.user.dob
     console.log(req.body)
-    if(!lno || !pno || !vmake || !eno || !rdate || !ino || !isno || !vcover || !iprovider || !userId || !dob){
+    if(!lno || !pno || !vmake || !eno || !rdate || !ino || !isno  || !iprovider || !userId || !dob){
         return next(errorHandler(423,"Please provide all credentials properly"))
     }
     const licenceDate=new Date(dob);
@@ -126,7 +143,9 @@ app.post("/user/signup3",async (req,res,next)=>{
 
 
 app.post("/user/signup4",async (req,res,next)=>{
-    const {email,userId,password} = req.body;
+    const password = req.body.password;
+    const email = req.session.user.email
+    const userId = req.session.user.id
     console.log(req.body);
     if(!email || !password || !userId ){
         return next(errorHandler(423,"Please provide all credentials properly"))
@@ -144,18 +163,33 @@ app.post("/user/signup4",async (req,res,next)=>{
 })
 app.post("/user/complaint",async (req,res,next)=>{
     const {cname,gender,dob,address,mobile,mail,mdate,place,descr} = req.body;
+    const userId = req.session.user.id
     console.log(req.body);
     if(!cname || !gender || !dob || !address || !mobile || !mobile || !mail || !mdate || !place || !descr){
         return next(errorHandler(423,"Please provide all credentials properly"))
+
     }
-    
     try{
-    res.status(200).json({success:true,message:"Values entered successfully"})
+    try{
+        
+        const response1 = await db.query("select registration_no from vehicle_details where user_id = $1",[userId])
+        let regNo = response1.rows[0].registration_no;
+        let regPin = regNo.slice(0,4);
+        console.log(regPin)
+
+    
     }
     catch(err){
         next(err);
     }
+    res.status(200).json({success:true,message:"Values entered successfully"})
+}
 
+catch(error)
+{
+    console.log(error)
+    next(error)
+}
 })
 app.post("/user/login",async(req,res,next)=>{
     console.log(req.body)
@@ -220,6 +254,7 @@ app.get("/home/vehicle",async(req,res,next)=>{
 app.get("/home/insurance",async(req,res,next)=>{
     userId = req.session.user.id;    
     try{
+        console.log(userId)
         const response=await db.query("select insurance.insurance_no,issue_date,exp_date,scheme_no,ins_provider from insurance , documents where documents.user_id=$1 and documents.insurance_no=insurance.insurance_no",[userId]);
 
         if(!response.rowCount){

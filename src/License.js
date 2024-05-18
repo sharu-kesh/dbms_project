@@ -1,25 +1,26 @@
 import { useState,useEffect} from "react"
 import axios from "axios"
 axios.defaults.withCredentials = true;
-export default function License({userId}){
+let isFirst = true;
+export default function License(){
     const [licence,setLicence] = useState({
         issue_date:new Date(),
         exp_date:new Date()
     });
     const [expiry,setExpiry]=useState("");
-    useEffect(function(){
         async function getLicence(){
             try {
                 const respon = await axios.get(`http://localhost:5000/home/licence`)
                 console.log(respon)
                 setLicence(respon.data.data)
+                isFirst = false;
                 setExpiry("hello")
             } catch (error) {
                 console.log(error)
             }
         }
+        if(isFirst)
         getLicence()
-    },[userId])
     console.log(licence)
    const idate=new Date(licence.issue_date);
    var dateString=idate.toJSON().split('T')[0];

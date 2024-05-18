@@ -1,25 +1,28 @@
-import { useState,useEffect} from "react"
+import { useState} from "react"
 import axios from "axios"
 axios.defaults.withCredentials = true;
-export default function Insurance({userId}){
+let isFirst = true;
+export default function Insurance(){
     const [insurance,setInsurance] = useState({
         issue_date:new Date(),
         exp_date:new Date()
     })
     const [expiry,setExpiry]=useState("");
-    useEffect(function(){
+    
         async function getInsurance(){
             try {
                 const respon = await axios.get(`http://localhost:5000/home/insurance`)
                 console.log(respon)
                 setInsurance(respon.data.data)
+                isFirst = false;
                 setExpiry("hello")
             } catch (error) {
                 console.log(error)
             }
         }
+        if(isFirst)
         getInsurance()
-    },[userId])
+    
     console.log(insurance)
    const idate=new Date(insurance.issue_date);
    var dateString=idate.toJSON().split('T')[0];

@@ -1,21 +1,24 @@
 import axios from "axios"
-import { useState,useEffect } from "react";
+import { useState } from "react";
 axios.defaults.withCredentials = true;
+let isFirst = true;
 export default function Vehicle({userId}){
     const [vehicle,setVehicle] = useState({
         registration_date:new Date()
     });
-    useEffect(function(){
+    
         async function getVehicle(){
             try {
                 const respon = await axios.get(`http://localhost:5000/home/vehicle`)
                 setVehicle(respon.data.data)
+                isFirst = false;
             } catch (error) {
                 console.log(error)
             }
         }
+        if(isFirst)
         getVehicle()
-    },[userId])
+    
     console.log(vehicle)
    const redate=new Date(vehicle.registration_date);
    var dateString=redate.toJSON().split('T')[0];

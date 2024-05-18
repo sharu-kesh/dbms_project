@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import {useNavigate} from "react-router-dom"
 import axios from 'axios'
-function Signup2({userId,setENo,setRDate,setVMake}) {
+function Signup2() {
     const navigate = useNavigate()
     const [rno,setRno] = useState("")
     const [vmake,setVmake] = useState("")
@@ -13,10 +13,7 @@ function Signup2({userId,setENo,setRDate,setVMake}) {
     const [error,setError] = useState("")
     async function handleClick(e){
         e.preventDefault()
-        const data={rno,rdate,vmake,vmodel,cno,ftype,userId}
-        setRDate(rdate)
-        setVMake(vmake)
-        setENo(eno)
+        const data={rno,rdate,vmake,vmodel,cno,ftype,eno}
         try{
         const response = await axios.post("http://localhost:5000/user/signup2",data)
         console.log(response.data)
