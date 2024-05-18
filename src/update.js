@@ -9,7 +9,7 @@ function Update({userId}) {
   const [oldEmail,setOldEmail] = useState("")
   const [newEmail,setNewEmail] = useState("")
   const [oldPhoneNo,setOldPhoneNo] = useState("")
-  const [newPhoneNO,setNewPhoneNo] = useState("")
+  const [newPhoneNo,setNewPhoneNo] = useState("")
   const [address,setAddress] = useState("")
   const navigate = useNavigate()
   const [error,setError] = useState("")
@@ -17,7 +17,7 @@ function Update({userId}) {
 
 async function handleSubmit(e){
   e.preventDefault()
-  const data={oldPhoneNo,oldEmail,newEmail,newPhoneNO,address}
+  const data={oldPhoneNo,oldEmail,newEmail,newPhoneNo,address}
   try{
   const response = await axios.post("http://localhost:5000/user/login/update",data)
   //console.log(response.data)

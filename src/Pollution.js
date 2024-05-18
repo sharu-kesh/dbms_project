@@ -9,7 +9,7 @@ export default function Pollution({userId}){
     useEffect(function(){
         async function getPollution(){
             try {
-                const respon = await axios.get(`http://localhost:5000/home/pollution/${userId}`)
+                const respon = await axios.get(`http://localhost:5000/home/pollution`)
                 console.log(respon)
                 setPollution(respon.data.data)
                 setExpiry("hello")
