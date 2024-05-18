@@ -10,6 +10,7 @@ useEffect(function(){
             const respon = await axios.get(`http://localhost:5000/home/owner`)
             console.log(respon)
             setOwner(respon.data.data)
+            console.log(owner.fullname)
         } catch (error) {
             console.log(error)
         }
@@ -51,7 +52,7 @@ useEffect(function(){
                 <thead>DETAILS</thead>
                 <tbody>
                     <tr>
-                        <input type="text" value={owner.fullName} />
+                        <input type="text" value={owner.fullname} />
                     </tr>
                     <tr>
                         <input type="text" value={12}/>

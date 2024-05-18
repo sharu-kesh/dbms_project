@@ -102,7 +102,7 @@ app.post("/user/signup3",async (req,res,next)=>{
     const expiry=new Date(issue)
     expiry.setMonth(expiry.getMonth()+monthsToAdd)
     const diffInMonths=monthsToAdd
-    const monthsString=convertMonthsToString(diffInMonths)
+    const monthsString=convertMonthsToString(6)
     const iIssue=new Date(rdate)
     iIssue.setMonth(iIssue.getMonth()+2)
     const expiryDate=new Date(issue)
@@ -270,7 +270,7 @@ app.get("/home/licence",async(req,res,next)=>{
 app.get("/home/owner",async(req,res,next)=>{
     userId = req.session.user.id;
     try{
-        const response=await db.query("select concat(concat(fname,' '),lname) as fullName,phone_no,address,aadhar_no,gender,email from user_details,users where user_details.user_id=$1 and users.user_id=$1",[userId]);
+        const response=await db.query("select concat(concat(fname,' '),lname) fullName,phone_no,address,aadhar_no,gender,email from user_details,users where user_details.user_id=$1 and users.user_id=$1",[userId]);
         if(!response.rowCount){
             console.log("here")
             return next(errorHandler(404,"User not found"))
