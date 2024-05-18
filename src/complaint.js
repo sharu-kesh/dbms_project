@@ -60,7 +60,7 @@ function Complaint() {
     <div className="complaintForm">
         <div className="complaintTitle">COMPLAINT REGISTRATION FORM</div>
         <div className="complaintTable">
-            <table>
+            <table className='t1'>
                 <thead>Details of Complaint</thead>
                 <tbody>
                     <tr>
@@ -89,7 +89,7 @@ function Complaint() {
                     </tr>
                 </tbody>
             </table>
-            <table>
+            <table className='t2'>
                 <thead>Details of Complaint</thead>
                 <tbody>
                     <tr>
