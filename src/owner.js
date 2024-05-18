@@ -1,12 +1,13 @@
 import React from 'react'
 import { useState,useEffect} from "react"
 import axios from "axios"
+axios.defaults.withCredentials = true;
 function Owner({userId}) {
   const [owner,setOwner] = useState({})
 useEffect(function(){
     async function getOwner(){
         try {
-            const respon = await axios.get(`http://localhost:5000/home/owner/${userId}`)
+            const respon = await axios.get(`http://localhost:5000/home/owner`)
             console.log(respon)
             setOwner(respon.data.data)
         } catch (error) {

@@ -269,7 +269,8 @@ app.get("/home/owner/:id",async(req,res,next)=>{
 
 app.post("/user/login/update",async(req,res,next)=>{
     console.log(req.body)
-    const {oldPhoneNo,oldEmail}=req.body
+    userId = req.session.user.id;
+    const {oldPhoneNo,oldEmail,newEmail,newPhoneNO,address}=req.body
     try{
         const response=await db.query("select u.email,ud.phone_no from users u,user_details ud where u.user_id=$1 and ud.user_id = $1",[userId]);
         if(!response.rowCount){
@@ -278,14 +279,29 @@ app.post("/user/login/update",async(req,res,next)=>{
         }else{
             const validEmail = oldEmail === response.rows[0].email;
             const validPhoneNo = oldPhoneNo === response.rows[0].phone_no;
-            if(validEmail && validPhoneNo)
+            if(validEmail)
                 {
-                    const response1 = await db.query("update users user_id = $1",[userId]);
-                    const response2 = await db.query("select u.email,ud.phone_no from users u,user_details ud where u.user_id=$1 and ud.user_id = $1",[userId]);
+                if(validPhoneNo)
+                {
+                    try{
+                        const response1 = await db.query("update users set email = $2 and phone_no = $3 from users join user_details on users.user_id = user_details.user_id where user.user_id=$1",[userId,newEmail,newPhoneNO]);
+                    }
+                    catch(error)
+                    {
+                        console.log(error)
+                        next(error)
+                    }
                 }
+                else{
+                    return next(errorHandler(404,"Enter correct password"))
+                }}
+                else{
+                    return next(errorHandler(404,"Enter correct email"))
+                }
+            }
             res.status(200).json({success:true})
         }
-    }catch(error){
+    catch(error){
         console.log(error)
         next(error)
     }

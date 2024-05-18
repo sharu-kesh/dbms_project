@@ -1,5 +1,6 @@
 import { useState,useEffect} from "react"
 import axios from "axios"
+axios.defaults.withCredentials = true;
 export default function Pollution({userId}){
     const [pollution,setPollution] = useState({
         issue_date:new Date()

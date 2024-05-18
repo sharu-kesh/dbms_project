@@ -1,5 +1,6 @@
 import { useState,useEffect} from "react"
 import axios from "axios"
+axios.defaults.withCredentials = true;
 export default function License({userId}){
     const [licence,setLicence] = useState({
         issue_date:new Date(),
