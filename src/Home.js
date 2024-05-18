@@ -8,6 +8,8 @@ import img4 from './v-permit-services.png'
 import img5 from './v-homologation.png'
 import img6 from './v-echallan-icon.png'
 import img7 from './v-vehicle-registration.png'
+import axios from "axios"
+axios.defaults.withCredentials = true;
 export default function Home(){
     return(
         <>

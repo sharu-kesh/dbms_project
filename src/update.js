@@ -1,6 +1,8 @@
 import React,{ useEffect, useState } from 'react'
 import axios from "axios"
 import {useNavigate} from "react-router-dom"
+axios.defaults.withCredentials = true;
+
 
 
 function Update({userId}) {
@@ -15,12 +17,12 @@ function Update({userId}) {
 
 async function handleSubmit(e){
   e.preventDefault()
-  const data={oldPhoneNo,oldEmail,userId}
+  const data={oldPhoneNo,oldEmail,newEmail,newPhoneNO,address}
   try{
   const response = await axios.post("http://localhost:5000/user/login/update",data)
   //console.log(response.data)
   if(response.data.success){
-      navigate("/user")
+      navigate("/home")
   }else{
       console.log(response.data.message)
       setError(response.data.message)
