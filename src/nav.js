@@ -5,8 +5,8 @@ function Nav(){
             <h2>Know About Your Vehicle</h2>
             <ul>
             <div class="vertical-line"></div>
-                <li><a href="/Home">Home</a></li>
-                <li><a href="#">Transfer Onwership</a></li>
+                <li><a href="/home">Home</a></li>
+                <li><a href="/home/transfer">Transfer Onwership</a></li>
                 <div className="vehicle">
                 <li><a href="#">Info</a>
                     <div className="content">
@@ -15,11 +15,11 @@ function Nav(){
                         <Link to="/License">License Details</Link>
                         <Link to="/Insurance">Insurance Details</Link>
                         <Link to="/owner">Owner Details</Link>
-                        <Link to="/update">Update Details</Link>
+                        <Link to="/home/update">Update Details</Link>
                     </div>
                 </li>
                 </div>
-                <li><Link to="/complaint">Complaint</Link></li>
+                <li><Link to="/home/complaint">Complaint</Link></li>
                 <li><a href='/'>Logout</a></li>
             </ul>
         </nav>

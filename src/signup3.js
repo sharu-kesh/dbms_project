@@ -6,19 +6,18 @@ function Signup3({eNo,rDate,vMake,userId,birthDate}) {
     const [lno,setLno] = useState("")
     const [ino,setIno] = useState("")
     const [isno,setIsno] = useState("")
-    const [vcover,setVcover] = useState("")
     const [iprovider,setIprovider] = useState("")
     const [pno,setPno] = useState("")
     const [error,setError] = useState("")
 
     async function handleClick(e){
         e.preventDefault()
-        const data={lno,ino,isno,vcover,iprovider,pno,eno:eNo,vmake:vMake,rdate:rDate,userId,dob:birthDate}
+        const data={lno,ino,isno,iprovider,pno,eno:eNo,vmake:vMake,rdate:rDate,userId,dob:birthDate}
         try{
         const response = await axios.post("http://localhost:5000/user/signup3",data)
         console.log(response.data)
         if(response.data.success){
-            navigate("/signup4")
+            navigate("/user/signup1/signup2/signup3/signup4")
         }else{
             console.log(response.data.message)
             setError(response.data.message)
@@ -50,11 +49,6 @@ function Signup3({eNo,rDate,vMake,userId,birthDate}) {
             </div>
             <div className="input-box">
                 <input type="text" placeholder='Insurance scheme number' onChange={(e)=>setIsno(e.target.value)}
-                required
-                ></input>
-            </div>
-            <div className="input-box">
-                <input type="text" placeholder='vehicle coverage' onChange={(e)=>setVcover(e.target.value)}
                 required
                 ></input>
             </div>

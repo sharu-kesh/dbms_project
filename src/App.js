@@ -39,21 +39,20 @@ function App() {
       <Route path="/home" element={<Home/>}/>
       <Route path="/vehicle" element={<Vehicle/>}/>
       <Route path="/about" element={<About/>}/>
-      <Route path="/complaint" element={<Complaint/>}/>
+      <Route path="/home/complaint" element={<Complaint/>}/>
       <Route path="/insurance" element={<Insurance userId={userId}/>}/>
       <Route path="/pollution" element={<Pollution userId={userId}/>}/>
-      <Route path="/login" element={<Login />}/>
       <Route path="/police" element={<Police/>}/>
       <Route path="/user" element={<User setUserId={setUserId}/>}/>
       <Route path="/home1" element={<Home1/>}/>
-      <Route path="/signup1" element={<Signup1 setUserId={setUserId} setEmailAddress={setEmailAddress} setBirthDate={setBirthDate}/>}/>
-      <Route path="/signup2" element={<Signup2 userId={userId} setENo={setENo} setRDate={setRDate} setVMake={setVMake}/>}/>
-      <Route path="/signup3" element={<Signup3 userId={userId} eNo={eNo} rDate={rDate} vMake={vMake} birthDate={birthDate}/>}/>
-      <Route path="/signup4" element={<Signup4 userId={userId} emailAddress={emailAddress}/>}/>
-      <Route path="/transfer" element={<Transfer/>}/>
+      <Route path="/user/signup1" element={<Signup1 setUserId={setUserId} setEmailAddress={setEmailAddress} setBirthDate={setBirthDate}/>}/>
+      <Route path="/user/signup1/signup2" element={<Signup2 userId={userId} setENo={setENo} setRDate={setRDate} setVMake={setVMake}/>}/>
+      <Route path="/user/signup1/signup2/signup3" element={<Signup3 userId={userId} eNo={eNo} rDate={rDate} vMake={vMake} birthDate={birthDate}/>}/>
+      <Route path="/user/signup1/signup2/signup3/signup4" element={<Signup4 userId={userId} emailAddress={emailAddress}/>}/>
+      <Route path="/home/transfer" element={<Transfer/>}/>
       <Route path="/license" element={<License userId={userId}/>}/>
       <Route path="/owner" element={<Owner userId={userId}/>}/>
-      <Route path="/update" element={<Update/>}/>
+      <Route path="/home/update" element={<Update/>}/>
       <Route path="/police/police_home" element={<Police_home/>}/>
       <Route path="/police/police_home/police_vehicle" element={<Police_vehicle/>}/>
       <Route path="/police/police_home/police_vehicle/home_police" element={<Home_police/>}/>
