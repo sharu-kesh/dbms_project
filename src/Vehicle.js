@@ -4,7 +4,7 @@ axios.defaults.withCredentials = true;
 export default function Vehicle({userId}){
     const [vehicle,setVehicle] = useState({
         registration_date:new Date()
-    })
+    });
     useEffect(function(){
         async function getVehicle(){
             try {
@@ -20,38 +20,58 @@ export default function Vehicle({userId}){
    const redate=new Date(vehicle.registration_date);
    var dateString=redate.toJSON().split('T')[0];
     return(
-        
-        <>
-        <div className="v">
-        <div className="pcontainer">
-            <form action="">
-                <div className="pinput_box">
-            <label htmlFor="rno">Registration Number</label>
-            <input type="text"  value={vehicle.registration_no}/>
+        <div className="complaintt">
+        <div className="complaintForm">
+        <div className="complaintTitle">VEHICLE DETAILS</div>
+            <div className="complaintTable">
+            <table className="t1">
+              <thead>FIELDS</thead>
+              <tbody>
+                    <tr>
+                        <label htmlFor="">VEHICLE REGISTRATION NUMBER</label>
+                    </tr>
+                    <tr>
+                        <label htmlFor="">VEHICLE REGISTRATION DATE</label>
+                    </tr>
+                    <tr>
+                        <label htmlFor="">VEHICLE MAKE</label>
+                    </tr>
+                    <tr>
+                        <label htmlFor="">VEHICLE MODEL</label>
+                    </tr>
+                    <tr>
+                        <label htmlFor="">CHASSIS NUMBER</label>
+                    </tr>
+                    <tr>
+                        <label htmlFor="">FUEL TYPE</label>
+                    </tr>
+              </tbody>
+            </table>
+            <table className="t2">
+                <thead>DETAILS</thead>
+                <tbody>
+                    <tr>
+                        <input type="text" value={vehicle.registration_no} />
+                    </tr>
+                    <tr>
+                        <input type="text" value={dateString}/>
+                    </tr>
+                    <tr>
+                        <input type="text" value={vehicle.vehicle_make}/>
+                    </tr>
+                    <tr>
+                        <input type="text" value={vehicle.vehicle_model} />
+                    </tr>
+                    <tr>
+                        <input type="text" value={vehicle.vin} />
+                    </tr>
+                    <tr>
+                        <input type="text" value={vehicle.fuel_type} />
+                    </tr>
+                </tbody>
+            </table>
             </div>
-            <div className="pinput_box">
-            <label htmlFor="rno">Registration Date</label>
-            <input type="text"  value={dateString}/>
-            </div>
-            <div className="pinput_box"> 
-            <label htmlFor="cno">Chassis Number</label>
-            <input type="text" value={vehicle.vin}/>
-            </div>
-            <div className="pinput_box">
-            <label htmlFor="vmodel">Vehicle Make</label>
-            <input type="text" value={vehicle.vehicle_make}/>
-            </div>
-            <div className="pinput_box">
-            <label htmlFor="ftype">Vehicle Model</label>
-            <input type="text" value={vehicle.vehicle_model}/>
-            </div>
-            <div className="pinput_box">
-            <label htmlFor="ftype">Fuel Type</label>
-            <input type="text" value={vehicle.fuel_type}/>
-            </div>
-            </form>
         </div>
         </div>
-        </>
     );
 }

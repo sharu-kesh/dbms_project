@@ -10,11 +10,11 @@ function Nav(){
                 <div className="vehicle">
                 <li><a href="#">Info</a>
                     <div className="content">
-                        <Link to="/Vehicle"> Vehicle Details</Link>
-                        <Link to="/Pollution">Pollution Certificate</Link>
-                        <Link to="/License">License Details</Link>
-                        <Link to="/Insurance">Insurance Details</Link>
-                        <Link to="/owner">Owner Details</Link>
+                        <Link to="/home/vehicle"> Vehicle Details</Link>
+                        <Link to="/home/pollution">Pollution Certificate</Link>
+                        <Link to="/home/license">License Details</Link>
+                        <Link to="/home/insurance">Insurance Details</Link>
+                        <Link to="/home/owner">Owner Details</Link>
                         <Link to="/home/update">Update Details</Link>
                     </div>
                 </li>

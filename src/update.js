@@ -36,34 +36,60 @@ async function handleSubmit(e){
   }
 }
   return (
-<div className="u">
-        <div className="pcontainer">
-            <form onSubmit={handleSubmit}>
-                <div className="pinput_box">
-            <label htmlFor="cno">Old Contact Number</label>
-            <input type="text" onChange={(e)=>setOldPhoneNo(e.target.value)}/>
-            </div>
-            <div className="pinput_box">
-            <label htmlFor="ncno">New Contact Number</label>
-            <input type="text" onChange={(e)=>setNewPhoneNo(e.target.value)}/>
-            </div>
-            <div className="pinput_box">
-            <label htmlFor="email">Old Email</label>
-            <input type="email" onChange={(e)=>setOldEmail(e.target.value)}/>
-            </div>
-            <div className="pinput_box">
-            <label htmlFor="nemail">New Email</label>
-            <input type="email" onChange={(e)=>setNewEmail(e.target.value)}/>
-            </div>
-            <div className="pinput_box">
-            <label htmlFor="naddress">New Address</label>
-            <input type="text" onChange={(e)=>setAddress(e.target.value)}/>
-            </div>
-            <button type='submit' className="submit">Submit</button>
-            </form>
-            {error && <p id="err">{error}</p>}
+<div className="complaintt">
+    <div className="complaintForm">
+        <div className="complaintTitle">UPDATE PERSONAL DETAILS </div>
+        <div className="complaintTable">
+            <table className='t1'>
+                <thead>OLD VALUES</thead>
+                <tbody>
+                    <tr>
+                        <label htmlFor="">OLD PHONE NO.</label>
+                    </tr>
+                    <tr>
+                    <input type="text" placeholder="Enter old phone number" onChange={(e)=>setOldPhoneNo(e.target.value)} required/>
+                    </tr>
+                    <tr>
+                        <label htmlFor="">OLD E-MAIL ID</label>
+                    </tr>
+                    <tr>
+                    <input type="text" placeholder="Enter old mail id" onChange={(e)=>setOldEmail(e.target.value)} required/>
+                    </tr>
+                </tbody>
+            </table>
+            <table className='t2'>
+                <thead>NEW VALUES</thead>
+                <tbody>
+                <tr>
+                        <label htmlFor="">NEW PHONE NO.</label>
+                    </tr>
+                    <tr>
+                    <input type="text" placeholder="Enter new phone number" onChange={(e)=>setNewPhoneNo(e.target.value)} required/>
+                    </tr>
+                    <tr>
+                        <label htmlFor="">NEW E-MAIL ID</label>
+                    </tr>
+                    <tr>
+                    <input type="text" placeholder="Enter new mail id" onChange={(e)=>setNewEmail(e.target.value)} required/>
+                    </tr>
+                    <tr>
+                        <label htmlFor="">NEW ADDRESS</label>
+                    </tr>
+                    <tr>
+                    {/* <input type="text" placeholder="Enter new address" onChange={(e)=>setAddress(e.target.value)} required/> */}
+                    <textarea placeholder="Enter new address" onChange={(e)=>setAddress(e.target.value)} required/>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-        </div>  )
+        
+        <div className="complaintButton">
+        <button type="submit" onClick={handleSubmit}>Register</button>
+        </div>
+        {error && <p id="err">{error}</p>}        
+    </div>
+    </div> 
+  )
 }
 
 export default Update

@@ -2,19 +2,19 @@ import { useNavigate } from 'react-router-dom';
 function Home_police() {
     const navigate =useNavigate()
     function handleOwner(){
-        navigate("/owner")
+        navigate("/police/police_home/police_vehicle/home_police/owner")
     }
     function handleVehicle(){
-        navigate("/Vehicle")
+        navigate("/police/police_home/police_vehicle/home_police/vehicle")
     }
     function handleLicence(){
-        navigate("/License")
+        navigate("/police/police_home/police_vehicle/home_police/licence")
     }
     function handleInsurance(){
-        navigate("/Insurance")
+        navigate("/police/police_home/police_vehicle/home_police/insurance")
     }
     function handlePollution(){
-        navigate("/Pollution")
+        navigate("/police/police_home/police_vehicle/home_police/pollution")
     }
   return (
     <div className="div">
