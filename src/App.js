@@ -40,8 +40,8 @@ function App() {
       <Route path="/vehicle" element={<Vehicle/>}/>
       <Route path="/about" element={<About/>}/>
       <Route path="/home/complaint" element={<Complaint/>}/>
-      <Route path="/insurance" element={<Insurance userId={userId}/>}/>
-      <Route path="/pollution" element={<Pollution userId={userId}/>}/>
+      <Route path="/insurance" element={<Insurance />}/>
+      <Route path="/pollution" element={<Pollution />}/>
       <Route path="/police" element={<Police/>}/>
       <Route path="/user" element={<User setUserId={setUserId}/>}/>
       <Route path="/home1" element={<Home1/>}/>
@@ -50,8 +50,8 @@ function App() {
       <Route path="/user/signup1/signup2/signup3" element={<Signup3 userId={userId} eNo={eNo} rDate={rDate} vMake={vMake} birthDate={birthDate}/>}/>
       <Route path="/user/signup1/signup2/signup3/signup4" element={<Signup4 userId={userId} emailAddress={emailAddress}/>}/>
       <Route path="/home/transfer" element={<Transfer/>}/>
-      <Route path="/license" element={<License userId={userId}/>}/>
-      <Route path="/owner" element={<Owner userId={userId}/>}/>
+      <Route path="/license" element={<License />}/>
+      <Route path="/owner" element={<Owner/>}/>
       <Route path="/home/update" element={<Update/>}/>
       <Route path="/police/police_home" element={<Police_home/>}/>
       <Route path="/police/police_home/police_vehicle" element={<Police_vehicle/>}/>

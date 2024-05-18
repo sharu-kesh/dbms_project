@@ -217,8 +217,8 @@ app.get("/home/vehicle",async(req,res,next)=>{
 
 
 
-app.get("/home/insurance/:id",async(req,res,next)=>{
-    userId = req.params.id;
+app.get("/home/insurance",async(req,res,next)=>{
+    userId = req.session.user.id;    
     try{
         const response=await db.query("select insurance.insurance_no,issue_date,exp_date,scheme_no,ins_provider from insurance , documents where documents.user_id=$1 and documents.insurance_no=insurance.insurance_no",[userId]);
 
@@ -234,8 +234,9 @@ app.get("/home/insurance/:id",async(req,res,next)=>{
     }
 })
 
-app.get("/home/pollution/:id",async(req,res,next)=>{
-    userId = req.params.id;
+app.get("/home/pollution",async(req,res,next)=>{
+    userId = req.session.user.id;
+    console.log(userId)
     try{
         const response=await db.query("select pollution_cer.pollution_cer_no,issue_date,validation,pollution_cer.vehicle_make,vehicle_model from pollution_cer,documents,vehicle_details where documents.user_id=$1 and documents.pollution_cer_no=pollution_cer.pollution_cer_no and vehicle_details.user_id=$1",[userId]);
         if(!response.rowCount){
@@ -250,8 +251,8 @@ app.get("/home/pollution/:id",async(req,res,next)=>{
     }
 })
 
-app.get("/home/licence/:id",async(req,res,next)=>{
-    userId = req.params.id;
+app.get("/home/licence",async(req,res,next)=>{
+    userId = req.session.user.id;
     try{
         const response=await db.query("select licence.licence_no,issue_date,exp_date from licence,documents where documents.user_id=$1 and documents.licence_no=licence.licence_no",[userId]);
         if(!response.rowCount){
@@ -266,8 +267,8 @@ app.get("/home/licence/:id",async(req,res,next)=>{
     }
 })
 
-app.get("/home/owner/:id",async(req,res,next)=>{
-    userId = req.params.id;
+app.get("/home/owner",async(req,res,next)=>{
+    userId = req.session.user.id;
     try{
         const response=await db.query("select concat(concat(fname,' '),lname) as fullName,phone_no,address,aadhar_no,gender,email from user_details,users where user_details.user_id=$1 and users.user_id=$1",[userId]);
         if(!response.rowCount){
@@ -284,8 +285,10 @@ app.get("/home/owner/:id",async(req,res,next)=>{
 
 app.post("/user/login/update",async(req,res,next)=>{
     console.log(req.body)
+    console.log(req.session)
     userId = req.session.user.id;
-    const {oldPhoneNo,oldEmail,newEmail,newPhoneNO,address}=req.body
+    
+    const {oldPhoneNo,oldEmail,newEmail,newPhoneNo,address}=req.body
     try{
         const response=await db.query("select u.email,ud.phone_no from users u,user_details ud where u.user_id=$1 and ud.user_id = $1",[userId]);
         if(!response.rowCount){
@@ -299,19 +302,26 @@ app.post("/user/login/update",async(req,res,next)=>{
                 if(validPhoneNo)
                 {
                     try{
-                        const response1 = await db.query("update users set email = $2 and phone_no = $3 from users join user_details on users.user_id = user_details.user_id where user.user_id=$1",[userId,newEmail,newPhoneNO]);
+                        const response1 = await db.query("update users set email = $2 where user_id=$1",[userId,newEmail]);
                     }
                     catch(error)
                     {
                         console.log(error)
                         next(error)
                     }
+                    try{
+                        const response2 = await db.query("update user_details set phone_no = $2 , address = $3 where user_id = $1",[userId,newPhoneNo,address])
+                    }
+                    catch(error){
+                        console.log(error)
+                        next(error)
+                    }
                 }
                 else{
-                    return next(errorHandler(404,"Enter correct password"))
+                    return next(errorHandler(401,"Enter correct phone number"))
                 }}
                 else{
-                    return next(errorHandler(404,"Enter correct email"))
+                    return next(errorHandler(401,"Enter correct email"))
                 }
             }
             res.status(200).json({success:true})

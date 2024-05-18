@@ -9,7 +9,7 @@ export default function Insurance({userId}){
     useEffect(function(){
         async function getInsurance(){
             try {
-                const respon = await axios.get(`http://localhost:5000/home/insurance/${userId}`)
+                const respon = await axios.get(`http://localhost:5000/home/insurance`)
                 console.log(respon)
                 setInsurance(respon.data.data)
             } catch (error) {

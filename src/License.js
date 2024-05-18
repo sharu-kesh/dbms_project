@@ -9,7 +9,7 @@ export default function License({userId}){
     useEffect(function(){
         async function getLicence(){
             try {
-                const respon = await axios.get(`http://localhost:5000/home/licence/${userId}`)
+                const respon = await axios.get(`http://localhost:5000/home/licence`)
                 console.log(respon)
                 setLicence(respon.data.data)
             } catch (error) {
