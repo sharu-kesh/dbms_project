@@ -171,17 +171,44 @@ app.post("/user/complaint",async (req,res,next)=>{
     }
     try{
     try{
+    try{
+        try{
+    try{
         
         const response1 = await db.query("select registration_no from vehicle_details where user_id = $1",[userId])
-        let regNo = response1.rows[0].registration_no;
-        let regPin = regNo.slice(0,4);
-        console.log(regPin)
+        var regNo = response1.rows[0].registration_no;
+        var regPin = regNo.slice(0,4);
 
     
     }
     catch(err){
         next(err);
     }
+    const response2 = await db.query("select station_id from admins where office_id = $1",[regPin])
+    var stationId = response2.rows[0].station_id;
+}
+catch(error)
+{
+    console.log(error)
+    next(error)
+}
+    const response3 =  await db.query(" insert into user_complaints(user_id,vehicle_no,vehicle_lost_place,vehicle_description,vehicle_lost_date) values($1,$2,$3,$4,$5);",[userId,regNo,place,descr,mdate])
+    }
+    catch(error)
+    {
+        console.log(error)
+        next(error)
+    }
+
+    const response4 = await db.query("select complaint_id from user_complaints where user_id = $1;",[userId])
+    var complaintId = response4.rows[0].complaint_id;
+}
+   catch(error)
+   {
+    console.log(error)
+    next(error)
+   }
+   const response5 =  await db.query(" insert into police_complaints(complaint_id,station_id,vehicle_lost_date) values($1,$2,$3);",[complaintId,stationId,mdate])
     res.status(200).json({success:true,message:"Values entered successfully"})
 }
 
