@@ -1,17 +1,31 @@
 import { useNavigate } from 'react-router-dom';
 import {useState,useRef} from 'react';
 import axios from 'axios';
+axios.defaults.withCredentials = true;
+let isFirst = true;
 function Transfer() {
-    const [sfname,setSfname]=useState("");
-    const [slname,setSlname]=useState("");
-    const [sgender,setSgender]=useState("");
-    const [sdob,setSdob]=useState("");
-    const [saddress,setSaddress]=useState("");
-    const [smobile,setSmobile]=useState("");
-    const [smail,setSmail]=useState("");
-    const [saadhar,setSaadhar]=useState("");
-    const [regno,setRegno]=useState("");
+    const [owner,setOwner] = useState({
+        dob:new Date()
+    })
+    async function getOwner(){
+        try {
+            const respon = await axios.get(`http://localhost:5000/home/transfer/owner`)
+            console.log(respon)
+            setOwner(respon.data.data)
+            // console.log(owner.fullname)
+            isFirst = false;
 
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    if(isFirst)
+        {
+            getOwner()
+        }
+    const dateof=new Date(owner.dob)
+    dateof.setDate(dateof.getDate() + 1);
+    const dateofbirth=dateof.toJSON().split('T')[0];
     const [bfname,setBfname]=useState("");
     const [blname,setBlname]=useState("");
     const [bgender,setBgender]=useState("");
@@ -47,7 +61,7 @@ function Transfer() {
     const navigate = useNavigate()
     async function handleClick(e){
     e.preventDefault()
-    const data={sfname,slname,sgender,sdob,saddress,smobile,smail,saadhar,regno,bfname,blname,bgender,bdob,baddress,bmobile,bmail,baadhar,blno};
+    const data={bfname,blname,bgender,bdob,baddress,bmobile,bmail,baadhar,blno};
     try{
     const response = await axios.post("http://localhost:5000/user/complaint",data)
     if(response.data.success){
@@ -97,39 +111,39 @@ function Transfer() {
                 <tbody>
                     <tr>
                         <label htmlFor="">First Name</label>
-                        <input type="text" ref={ffname} placeholder="Enter your first name" onChange={(e)=>setSfname(e.target.value)} required/>
+                        <input type="text" ref={ffname} value={owner.fname} />
                     </tr>
                     <tr>
                         <label htmlFor="">Last Name</label>
-                        <input type="text" ref={flname} placeholder="Enter your last name" onChange={(e)=>setSlname(e.target.value)} required/>
+                        <input type="text" ref={flname}  value={owner.lname}/>
                     </tr>
                     <tr>
                         <label htmlFor="">Gender</label>
-                        <input type="text" ref={fgen} placeholder='enter gender' onChange={(e)=>setSgender(e.target.value)} required/>
+                        <input type="text" ref={fgen} value={owner.gender} />
                     </tr>
                     <tr>
                         <label htmlFor=""> Date of Birth</label>
-                        <input type="date" ref={fdob} placeholder="date of birth" onChange={(e)=>setSdob(e.target.value)} required/>
+                        <input type="text" ref={fdob} value={dateofbirth}/>
                     </tr>
                     <tr>
                         <label htmlFor="">Address</label>
-                        <textarea name="" ref={fadd} placeholder="address" onChange={(e)=>setSaddress(e.target.value)} required></textarea>
+                        <textarea name="" ref={fadd} value={owner.address}></textarea>
                     </tr>
                     <tr>
                         <label htmlFor="">Mobile No.</label>
-                        <input type="text" ref={fmob} placeholder="enter mobile number" onChange={(e)=>setSmobile(e.target.value)} required/>
+                        <input type="text" ref={fmob}  value={owner.phone_no}/>
                     </tr>
                     <tr>
                         <label htmlFor="">E-Mail ID</label>
-                        <input type="email" ref={fmail} placeholder="enter email id" onChange={(e)=>setSmail(e.target.value)}required/>
+                        <input type="email" ref={fmail} value={owner.email} />
                     </tr>
                     <tr>
                         <label htmlFor="">AADHAR NO.</label>
-                        <input type="email" ref={faadhar} placeholder="enter aadhar number" onChange={(e)=>setSaadhar(e.target.value)}required/>
+                        <input type="email" ref={faadhar} value={owner.aadhar_no} />
                     </tr>
                     <tr>
                         <label htmlFor="">VEHICLE REGISTRATION NO.</label>
-                        <input type="email" ref={fregno} placeholder="enter vehicle registration number" onChange={(e)=>setRegno(e.target.value)}required/>
+                        <input type="email" ref={fregno}/>
                     </tr>
 
                 </tbody>

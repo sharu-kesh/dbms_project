@@ -273,7 +273,7 @@ app.get("/home/pollution",async(req,res,next)=>{
     userId = req.session.user.id;
     console.log(userId)
     try{
-        const response=await db.query("select pollution_cer.pollution_cer_no,issue_date,validation,pollution_cer.vehicle_make,vehicle_model,engine_no from pollution_cer,documents,vehicle_details where documents.user_id=$1 and documents.pollution_cer_no=pollution_cer.pollution_cer_no and vehicle_details.user_id=$1",[userId]);
+        const response=await db.query("select pollution_cer.pollution_cer_no,pollution_cer.issue_date,validation,pollution_cer.vehicle_make,vehicle_model,engine_no from pollution_cer,documents,vehicle_details where documents.user_id=$1 and documents.pollution_cer_no=pollution_cer.pollution_cer_no and vehicle_details.user_id=$1",[userId]);
         if(!response.rowCount){
             console.log("here")
             return next(errorHandler(404,"User not found"))
@@ -306,6 +306,21 @@ app.get("/home/owner",async(req,res,next)=>{
     userId = req.session.user.id;
     try{
         const response=await db.query("select concat(concat(fname,' '),lname) fullName,phone_no,address,aadhar_no,gender,email from user_details,users where user_details.user_id=$1 and users.user_id=$1",[userId]);
+        if(!response.rowCount){
+            console.log("here")
+            return next(errorHandler(404,"User not found"))
+        }else{
+            res.status(200).json({success:true,data:response.rows[0]})
+        }
+    }catch(error){
+        console.log(error)
+        next(error)
+    }
+})
+app.get("/home/transfer/owner",async(req,res,next)=>{
+    userId = req.session.user.id;
+    try{
+        const response=await db.query("select fname,lname,phone_no,address,dob,aadhar_no,gender,email from user_details,users where user_details.user_id=$1 and users.user_id=$1",[userId]);
         if(!response.rowCount){
             console.log("here")
             return next(errorHandler(404,"User not found"))

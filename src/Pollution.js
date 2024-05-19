@@ -10,7 +10,7 @@ export default function Pollution(){
         async function getPollution(){
             try {
                 const respon = await axios.get(`http://localhost:5000/home/pollution`)
-                console.log(respon)
+                // console.log(respon)
                 setPollution(respon.data.data)
                 isFirst = false;
                 setExpiry("hello")
@@ -18,12 +18,14 @@ export default function Pollution(){
                 console.log(error)
             }
         }
-        if(isFirst)
+        if(isFirst){
+            console.log("hello")
         getPollution()
+        }
 
     console.log(pollution)
    const idate=new Date(pollution.issue_date);
-   var dateString=idate.toJSON().split('T')[0];
+   const dateString=idate.toJSON().split('T')[0];
     return(
         <div className="complaintt">
         <div className="complaintForm">
