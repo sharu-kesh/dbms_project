@@ -347,7 +347,7 @@ app.get("/home/owner",async(req,res,next)=>{
 app.get("/home/transfer/owner",async(req,res,next)=>{
     userId = req.session.user.id;
     try{
-        const response=await db.query("select fname,lname,phone_no,address,dob,aadhar_no,gender,email from user_details,users where user_details.user_id=$1 and users.user_id=$1",[userId]);
+        const response=await db.query("select fname,lname,phone_no,address,dob,aadhar_no,gender,email,registration_no from user_details,users,vehicle_details where user_details.user_id=$1 and users.user_id=$1 and vehicle_details.user_id=$1",[userId]);
         if(!response.rowCount){
             console.log("here")
             return next(errorHandler(404,"User not found"))
@@ -359,6 +359,10 @@ app.get("/home/transfer/owner",async(req,res,next)=>{
         next(error)
     }
 })
+
+// app.post("/home/transfer",async(req,res,next)=>{
+
+// })
 
 app.post("/user/login/update",async(req,res,next)=>{
     console.log(req.body)
