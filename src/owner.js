@@ -1,29 +1,32 @@
-import React from 'react'
-import { useState} from "react"
+import { useEffect,useState} from 'react'
 import axios from "axios"
 axios.defaults.withCredentials = true;
-let isFirst = true;
 
-function Owner() {
-  const [owner,setOwner] = useState({})
-    async function getOwner(){
-        try {
-            const respon = await axios.get(`http://localhost:5000/home/owner`)
-            console.log(respon)
-            setOwner(respon.data.data)
-            // console.log(owner.fullname)
-            isFirst = false;
+function Owner(){
+    const [owner,setOwner] = useState({})
+    const [error,setError] = useState("")
+useEffect(
+    function()
+    { 
+              async function getOwner(){
+                  try {
+                      const respon = await axios.get(`http://localhost:5000/home/owner`)
+                      console.log(respon)
+                      setOwner(respon.data.data)
 
-        } catch (error) {
-            console.log(error)
-        }
-    }
-    if(isFirst)
-        {
-            getOwner()
-        }
-    
-
+          
+                  } catch (error) {
+                      console.log(error)
+                      if (error?.response?.data?.message) {
+                        setError(error.response.data.message);
+                      } else {
+                        setError("Something went wrong! Please try again.");
+                      }
+                  }
+              }
+     getOwner()
+},[]
+)
   return (
     <div className="complaintt">
         <div className="complaintForm">

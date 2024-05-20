@@ -1,27 +1,33 @@
-import { useState} from "react"
+import { useEffect, useState} from "react"
 import axios from "axios"
 axios.defaults.withCredentials = true;
-let isFirst = true;
+
 export default function Pollution(){
     const [pollution,setPollution] = useState({
         issue_date:new Date()
     })
     const [expiry,setExpiry]=useState("");
-        async function getPollution(){
-            try {
-                const respon = await axios.get(`http://localhost:5000/home/pollution`)
-                // console.log(respon)
-                setPollution(respon.data.data)
-                isFirst = false;
-                setExpiry("hello")
-            } catch (error) {
-                console.log(error)
+    const [error,setError] = useState("");
+    useEffect(
+        function(){
+            async function getPollution(){
+                try {
+                    const respon = await axios.get(`http://localhost:5000/home/pollution`)
+                    // console.log(respon)
+                    setPollution(respon.data.data)
+                    setExpiry("hello")
+                } catch (error) {
+                    console.log(error)
+                    if (error?.response?.data?.message) {
+                        setError(error.response.data.message);
+                      } else {
+                        setError("Something went wrong! Please try again.");
+                      }
+                }
             }
-        }
-        if(isFirst){
-            console.log("hello")
-        getPollution()
-        }
+            getPollution()
+        },[]
+    )
 
     console.log(pollution)
     const dateof=new Date(pollution.issue_date)

@@ -2,6 +2,7 @@ import React from 'react'
 import { useState,useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+axios.defaults.withCredentials=true;
 function Police_vehicle() {
     async function handleSubmit(e){
         e.preventDefault()

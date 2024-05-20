@@ -22,7 +22,6 @@ import Home_police from './home_police'
 import Complaint from "./complaint"
 import More_details from "./More_details"
 import {BrowserRouter,Routes,Route} from "react-router-dom"
-import { useState } from 'react'
 function App() {
 
 

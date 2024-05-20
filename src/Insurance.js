@@ -3,6 +3,7 @@ import axios from "axios"
 axios.defaults.withCredentials = true;
 
 export default function Insurance(){
+    const [error,setError] = useState("")
   
     const [insurance,setInsurance] = useState({
         issue_date:new Date(),
@@ -19,9 +20,13 @@ export default function Insurance(){
                         console.log(respon)
                         setInsurance(respon.data.data)    
                         setExpiry("hello")
-                        return null
                     } catch (error) {
                         console.log(error)
+                        if (error?.response?.data?.message) {
+                            setError(error.response.data.message);
+                          } else {
+                            setError("Something went wrong! Please try again.");
+                          }
                     }
                 }
                 getInsurance()                

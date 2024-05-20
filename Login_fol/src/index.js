@@ -230,6 +230,7 @@ app.post("/user/login",async(req,res,next)=>{
             const validPwd = password === response.rows[0].pass_word;
             if(!validPwd) return next(errorHandler(401,"Wrong credentials"))
             req.session.user = {id:response.rows[0].user_id};
+            req.session.police = {regNo:null}
             console.log(req.session.user)
             res.status(200).json({success:true, data:response.rows[0].user_id})
         }
@@ -259,6 +260,25 @@ app.get("/police/home",async(req,res,next)=>
     }
     
 })
+app.get("/police/home/:id",async(req,res,next)=>
+    {
+    const id = req.params.id
+    try{
+        const response = await db.query("select * from complaint_details where complaint_id = $1",[id])
+        if(!response.rowCount){
+            console.log("here")
+            return next(errorHandler(404,"Details Not Fetched"))
+        }else{
+            console.log(response.rows)
+            res.status(200).json({success:true, data:response.rows[0]})
+    }}
+    catch(error)
+    {
+        console.log(error)
+        next(error)
+    }
+    
+})
 app.post("/police/login",async(req,res,next)=>{
     console.log(req.body)
     const {stationId,policePassword}=req.body
@@ -271,6 +291,7 @@ app.post("/police/login",async(req,res,next)=>{
             const validPwd = policePassword === response.rows[0].password;
             if(!validPwd) return next(errorHandler(401,"Wrong credentials"))
             req.session.police = {id:response.rows[0].station_id}
+            req.session.user = {id:null}
             res.status(200).json({success:true, data:response.rows})
         }
     }catch(error){
@@ -279,11 +300,43 @@ app.post("/police/login",async(req,res,next)=>{
     }
 })
 
+app.post("/police/complaint/update",async(req,res,next)=>{
+    console.log(req.body)
+    const complaintId = req.body.complaint_id;
+    try{
+       const response1 = await db.query("update user_complaints set vehicle_found_date = (select current_date) where complaint_id = $1",[complaintId])
+       try{
+        const response2 = await db.query("update police_complaints set vehicle_found_date = (select current_date) where complaint_id = $1",[complaintId])
+     }
+     catch(error){
+         console.log(error)
+         next(error)
+     }
+     res.status(200).json({success:true})
+    }
+    catch(error){
+        console.log(error)
+        next(error)
+    }
+})
 
 app.get("/home/vehicle",async(req,res,next)=>{
     userId = req.session.user.id;
-    // console.log("user id: ", req.session)
-    try{
+    const regNo = req.session.police.regNo; 
+    try{  
+        if(regNo)
+            {
+                try{
+                    const response1 = await db.query("select user_id from vehicle_details where registration_no = $1",[regNo])
+                    userId = response1.rows[0].user_id;
+                }
+                catch(error)
+                {
+                    console.log(error)
+                    next(error)
+                }
+            }
+
         const response=await db.query("select * from vehicle_details where user_id=$1",[userId]);
         if(!response.rowCount){
             console.log("here")
@@ -300,8 +353,22 @@ app.get("/home/vehicle",async(req,res,next)=>{
 
 
 app.get("/home/insurance",async(req,res,next)=>{
-    userId = req.session.user.id;    
-    try{
+    userId = req.session.user.id; 
+    const regNo = req.session.police.regNo; 
+    try{  
+        if(regNo)
+            {
+                try{
+                    const response1 = await db.query("select user_id from vehicle_details where registration_no = $1",[regNo])
+                    userId = response1.rows[0].user_id;
+                }
+                catch(error)
+                {
+                    console.log(error)
+                    next(error)
+                }
+            }   
+
         console.log(userId)
         const response=await db.query("select insurance.insurance_no,issue_date,exp_date,scheme_no,ins_provider from insurance , documents where documents.user_id=$1 and documents.insurance_no=insurance.insurance_no",[userId]);
 
@@ -320,8 +387,22 @@ app.get("/home/insurance",async(req,res,next)=>{
 // app.get()
 app.get("/home/pollution",async(req,res,next)=>{
     userId = req.session.user.id;
+    const regNo = req.session.police.regNo; 
+    try{  
+        if(regNo)
+            {
+                try{
+                    const response1 = await db.query("select user_id from vehicle_details where registration_no = $1",[regNo])
+                    userId = response1.rows[0].user_id;
+                }
+                catch(error)
+                {
+                    console.log(error)
+                    next(error)
+                }
+            }   
     console.log(userId)
-    try{
+
         const response=await db.query("select pollution_cer.pollution_cer_no,pollution_cer.issue_date,validation,pollution_cer.vehicle_make,vehicle_model,engine_no from pollution_cer,documents,vehicle_details where documents.user_id=$1 and documents.pollution_cer_no=pollution_cer.pollution_cer_no and vehicle_details.user_id=$1",[userId]);
         if(!response.rowCount){
             console.log("here")
@@ -337,7 +418,20 @@ app.get("/home/pollution",async(req,res,next)=>{
 
 app.get("/home/licence",async(req,res,next)=>{
     userId = req.session.user.id;
-    try{
+    const regNo = req.session.police.regNo; 
+    try{  
+        if(regNo)
+            {
+                try{
+                    const response1 = await db.query("select user_id from vehicle_details where registration_no = $1",[regNo])
+                    userId = response1.rows[0].user_id;
+                }
+                catch(error)
+                {
+                    console.log(error)
+                    next(error)
+                }
+            }   
         const response=await db.query("select licence.licence_no,issue_date,exp_date from licence,documents where documents.user_id=$1 and documents.licence_no=licence.licence_no",[userId]);
         if(!response.rowCount){
             console.log("here")
@@ -353,7 +447,21 @@ app.get("/home/licence",async(req,res,next)=>{
 
 app.get("/home/owner",async(req,res,next)=>{
     userId = req.session.user.id;
+    const regNo = req.session.police.regNo;
     try{
+        
+        if(regNo)
+            {
+                try{
+                    const response1 = await db.query("select user_id from vehicle_details where registration_no = $1",[regNo])
+                    userId = response1.rows[0].user_id;
+                }
+                catch(error)
+                {
+                    console.log(error)
+                    next(error)
+                }
+            }
         const response=await db.query("select concat(concat(fname,' '),lname) fullName,phone_no,address,aadhar_no,gender,email from user_details,users where user_details.user_id=$1 and users.user_id=$1",[userId]);
         if(!response.rowCount){
             console.log("here")
@@ -382,9 +490,26 @@ app.get("/home/transfer/owner",async(req,res,next)=>{
     }
 })
 
-// app.post("/home/transfer",async(req,res,next)=>{
+app.post("/police/login/vehicle",async(req,res,next)=>{
+    try{
+        console.log(req.body)
+        const regNo = req.body.regno
+        const response = await db.query("select registration_no from vehicle_details;")
+        let regisArr = (response.rows).map((item) => item.registration_no)
+        console.log(regisArr)
+        if(!(regisArr.includes(regNo)))
+            return next(errorHandler(401,"Wrong credentials"))
+            req.session.police.regNo = regNo;
+            console.log(req.session.police)
+            res.status(200).json({success:true})
 
-// })
+    }
+    catch(error)
+    {
+        console.log(error)
+        next(error)
+    }
+})
 
 app.post("/user/login/update",async(req,res,next)=>{
     console.log(req.body)

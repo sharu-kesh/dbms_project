@@ -1,24 +1,30 @@
 import axios from "axios"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 axios.defaults.withCredentials = true;
-let isFirst = true;
 export default function Vehicle({userId}){
+    const [error,setError] = useState("")
     const [vehicle,setVehicle] = useState({
         registration_date:new Date()
     });
-    
+useEffect(
+    function()
+    {
         async function getVehicle(){
             try {
                 const respon = await axios.get(`http://localhost:5000/home/vehicle`)
                 setVehicle(respon.data.data)
-                isFirst = false;
             } catch (error) {
                 console.log(error)
+                if (error?.response?.data?.message) {
+                    setError(error.response.data.message);
+                  } else {
+                    setError("Something went wrong! Please try again.");
+                  }
             }
         }
-        if(isFirst)
         getVehicle()
-    
+    },[]
+)    
     console.log(vehicle)
    const redate=new Date(vehicle.registration_date);
    var dateString=redate.toJSON().split('T')[0];
