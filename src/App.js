@@ -20,6 +20,7 @@ import Police_home from './police_home'
 import Police_vehicle from './police_vehicle'
 import Home_police from './home_police'
 import Complaint from "./complaint"
+import More_details from "./More_details"
 import {BrowserRouter,Routes,Route} from "react-router-dom"
 import { useState } from 'react'
 function App() {
@@ -55,6 +56,8 @@ function App() {
       <Route path="/police/police_home/police_vehicle/home_police/licence" element={<License/>}/>
       <Route path="/police/police_home/police_vehicle/home_police/insurance" element={<Insurance/>}/>
       <Route path="/police/police_home/police_vehicle/home_police/pollution" element={<Pollution/>}/>
+      <Route path="/police/police_home/more_details" element={<More_details/>}/>
+
 
 
     </Routes>

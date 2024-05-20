@@ -505,3 +505,109 @@ background-image: linear-gradient(316deg, #50d8d7 0%, #923993 74%);
     background: green;
     border-radius: 15px;
 }
+.complaint-item{
+    display: flex;
+    align-items: center;
+    width: full;
+    justify-content: space-between;
+}
+.complaint_details input[type="text"]{
+    /* display: flex; */
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 17px;
+    margin:1%;
+}
+.complaint_details input{
+    border: transparent;
+    width:200px
+}
+.complaint_details_button button{
+    box-sizing: border-box;
+    display: flex;
+    background:blue;
+    color:white;
+    margin: 1%;
+    border-radius: 15px;
+    text-decoration: none;
+    padding:10px;
+    height:50px;
+}
+.complaint_details{
+    position: relative;
+}
+
+.right-wrong{
+    font-size: 2rem;
+    position: absolute;
+    top: 50px;
+    right:20px;
+}
+.police_complaint{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    min-width: 100%;
+    margin:0 auto;
+    border: 1px solid black;
+}
+.police_complaint h2{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.police_complaint label{
+    margin:10px;
+    padding:10px;
+}
+
+.police_container{
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    min-width: 100vw;
+    margin: 0;
+    padding: 0;
+}
+
+.form_wrapper{
+    /* text-align: center; */
+    margin: 20px auto;
+    background-color: #330867;
+    width: 80%;
+    max-width: 700px;
+    height: 100%;
+    min-height: 100vh;
+    padding: 20px;
+    border-radius: 24px;
+}
+.form_wrapper h2{
+    text-align: center;
+    padding: 14px 0;
+    color: #fff;
+    font-family: sans-serif;
+}
+.form_group{
+    font-family: sans-serif;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0;
+}
+.form_group label{
+    padding: 0px 10px;
+}
+.form_group input{
+    padding: 10px;
+    border-radius: 12px;
+    border: none;
+    margin-top: 10px;
+}
+.form_group textarea{
+    margin-top: 10px;
+    border-radius: 24px;
+    min-height: 200px;
+}
+

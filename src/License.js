@@ -23,8 +23,10 @@ export default function License(){
         getLicence()
     console.log(licence)
    const idate=new Date(licence.issue_date);
+   idate.setDate(idate.getDate()+1)
    var dateString=idate.toJSON().split('T')[0];
    const exp=new Date(licence.exp_date);
+   exp.setDate(exp.getDate()+1)
    var expe=exp.toJSON().split('T')[0];
     return(
         <div className="complaintt">
