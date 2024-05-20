@@ -26,6 +26,7 @@ function Transfer() {
     const dateof=new Date(owner.dob)
     dateof.setDate(dateof.getDate() + 1);
     const dateofbirth=dateof.toJSON().split('T')[0];
+    const [chano,setChano]=useState("")
     const [bfname,setBfname]=useState("");
     const [blname,setBlname]=useState("");
     const [bgender,setBgender]=useState("");
@@ -61,9 +62,9 @@ function Transfer() {
     const navigate = useNavigate()
     async function handleClick(e){
     e.preventDefault()
-    const data={bfname,blname,bgender,bdob,baddress,bmobile,bmail,baadhar,blno};
+    const data={chano,bfname,blname,bgender,bdob,baddress,bmobile,bmail,baadhar,blno};
     try{
-    const response = await axios.post("http://localhost:5000/user/complaint",data)
+    const response = await axios.post("http://localhost:5000/home/transfer",data)
     if(response.data.success){
         ffname.current.value="";
         flname.current.value="";
@@ -87,7 +88,7 @@ function Transfer() {
 
 
         setSuccess("Your response has been recorded!");
-        navigate("/complaint")
+        // navigate("/complaint")
     }else{
         console.log(response.data.message)
         setError(response.data.message)
@@ -143,9 +144,12 @@ function Transfer() {
                     </tr>
                     <tr>
                         <label htmlFor="">VEHICLE REGISTRATION NO.</label>
-                        <input type="email" ref={fregno}/>
+                        <input type="email" ref={fregno} value={owner.registration_no}/>
                     </tr>
-
+                    <tr>
+                        <label htmlFor="">CHASSIS NO.(LAST 5 DIGITS)</label>
+                        <input type="email" ref={fregno} onChange={(e)=>setChano(e.target.value)} required/>
+                    </tr>
                 </tbody>
             </table>
             <table className='t2'>

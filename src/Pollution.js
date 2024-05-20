@@ -24,8 +24,9 @@ export default function Pollution(){
         }
 
     console.log(pollution)
-   const idate=new Date(pollution.issue_date);
-   const dateString=idate.toJSON().split('T')[0];
+    const dateof=new Date(pollution.issue_date)
+    dateof.setDate(dateof.getDate() + 1);
+    const dateString=dateof.toJSON().split('T')[0];
     return(
         <div className="complaintt">
         <div className="complaintForm">
