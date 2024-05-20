@@ -3,7 +3,40 @@ import image from './images-removebg-preview.jpg'
 import { FcOk } from "react-icons/fc";
 import wrong from './icons8-cancel-32.png'
 import correct from './icons8-correct-32.png'
+import axios from "axios"
+import { useEffect, useState } from 'react';
+axios.defaults.withCredentials = true;
+
+
 function Police_home() {
+
+  const [details,setDetails]=useState([])
+  const [error,setError] = useState("")
+ 
+  
+useEffect(
+   function()
+   {
+    async function getComplaintId()
+    {  
+    try {
+        const response = await axios.get("http://localhost:5000/police/home");
+        console.log(response.data)
+        setDetails(response.data)        
+        }
+       catch (error) {
+        console.log("An error occurred:");
+        console.log(error);
+        if (error?.response?.data?.message) {
+          setError(error.response.data.message);
+        } else {
+          setError("Something went wrong! Please try again.");
+        }}
+      }
+      getComplaintId()
+   },[] 
+)
+
   return (
     <div>
         <nav className="nav-bar">

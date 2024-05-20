@@ -4,15 +4,16 @@ import { FaUser,FaLock } from "react-icons/fa";
 import {useNavigate} from "react-router-dom"
 import axios from "axios"
 import { useEffect, useState } from 'react'
+axios.defaults.withCredentials = true;
 
 export default function Police(){
-        const [stationid,setStationid] = useState("")
-        const [police_password,setPolice_password] = useState("")
+        const [stationId,setStationid] = useState("")
+        const [policePassword,setPolice_password] = useState("")
         const navigate = useNavigate()
         const [error,setError] = useState("")
     async function handleSubmit(e){
         e.preventDefault()
-        const data={stationid,police_password}
+        const data={stationId,policePassword}
         try{
         const response = await axios.post("http://localhost:5000/police/login",data)
         console.log(response.data)
@@ -32,7 +33,7 @@ export default function Police(){
     }
     useEffect(function(){
         setError("")
-    },[stationid,police_password])
+    },[stationId,policePassword])
   return (
     <div className="wrapper-container">
     <div className='wrapper'>

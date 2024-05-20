@@ -239,18 +239,39 @@ app.post("/user/login",async(req,res,next)=>{
     }
 })
 
+app.get("/police/home",async(req,res,next)=>
+    {
+    var stationId =  req.session.police.id;
+    console.log(stationId)
+    try{
+        const response = await db.query("select * from complaint_details where station_id = $1",[stationId])
+        if(!response.rowCount){
+            console.log("here")
+            return next(errorHandler(404,"Details Not Fetched"))
+        }else{
+            console.log(response.rows)
+            res.status(200).json({success:true, data:response.rows})
+    }}
+    catch(error)
+    {
+        console.log(error)
+        next(error)
+    }
+    
+})
 app.post("/police/login",async(req,res,next)=>{
     console.log(req.body)
-    const {stationid,police_password}=req.body
+    const {stationId,policePassword}=req.body
     try{
-        const response=await db.query("select * from police where station_id=$1",[stationid]);
+        const response=await db.query("select * from police where station_id=$1",[stationId]);
         if(!response.rowCount){
             console.log("here")
             return next(errorHandler(404,"User not found"))
         }else{
-            const validPwd = police_password === response.rows[0].password;
+            const validPwd = policePassword === response.rows[0].password;
             if(!validPwd) return next(errorHandler(401,"Wrong credentials"))
-            res.status(200).json({success:true, data:response.rows[0].user_id})
+            req.session.police = {id:response.rows[0].station_id}
+            res.status(200).json({success:true, data:response.rows})
         }
     }catch(error){
         console.log(error)
@@ -296,6 +317,7 @@ app.get("/home/insurance",async(req,res,next)=>{
     }
 })
 
+// app.get()
 app.get("/home/pollution",async(req,res,next)=>{
     userId = req.session.user.id;
     console.log(userId)
