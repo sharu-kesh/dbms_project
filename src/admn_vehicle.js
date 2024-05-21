@@ -3,12 +3,12 @@ import { useState,useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 axios.defaults.withCredentials=true;
-function Police_vehicle() {
+function Admin_vehicle() {
     async function handleSubmit(e){
         e.preventDefault()
         const data={regno}
         try{
-        const response = await axios.post("http://localhost:5000/police/login/vehicle",data)
+        const response = await axios.post("http://localhost:5000/rto/login/vehicle",data)
         console.log(response.data)
         if(response.data.success){
             navigate("./home_police")
@@ -45,4 +45,4 @@ function Police_vehicle() {
   )
 }
 
-export default Police_vehicle
+export default Admin_vehicle

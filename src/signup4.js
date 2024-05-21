@@ -1,7 +1,7 @@
 import React ,{useState} from 'react'
 import {useNavigate} from "react-router-dom"
 import axios from 'axios'
-function Signup4({userId, emailAddress}) {
+function Signup4() {
     const [password,setPassword] = useState("")
     const [cpassword,setCpassword] = useState("")
     const [error,setError] = useState("")
@@ -11,10 +11,7 @@ function Signup4({userId, emailAddress}) {
     e.preventDefault()
     if(cpassword !== password)
       return;
-    const email = emailAddress
-    console.log(email)
-    const reqData = {userId,password}
-    const data = {...reqData, email}
+    const data = {password}
     try{
     const response = await axios.post("http://localhost:5000/user/signup4",data)
     console.log(response.data)

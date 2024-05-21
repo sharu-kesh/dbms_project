@@ -1,7 +1,8 @@
 import { useState,useEffect} from "react"
 import axios from "axios"
 axios.defaults.withCredentials = true;
-export default function License({userId}){
+export default function License(){
+    const [error,setError] = useState("")
     const [licence,setLicence] = useState({
         issue_date:new Date(),
         exp_date:new Date()
@@ -16,15 +17,17 @@ export default function License({userId}){
                 setExpiry("hello")
             } catch (error) {
                 console.log(error)
+                if (error?.response?.data?.message) {
+                    setError(error.response.data.message);
+                  } else {
+                    setError("Something went wrong! Please try again.");
+                  }
             }
         }
         getLicence()
-    },[userId])
+    },[])
+
     console.log(licence)
-   const idate=new Date(licence.issue_date);
-   var dateString=idate.toJSON().split('T')[0];
-   const exp=new Date(licence.exp_date);
-   var expe=exp.toJSON().split('T')[0];
     return(
         <div className="complaintt">
         <div className="complaintForm">
@@ -48,13 +51,13 @@ export default function License({userId}){
                 <thead>DETAILS</thead>
                 <tbody>
                     <tr>
-                        <input type="text" value={licence.licence_no} />
+                        <input type="text" value={licence.licence_no} readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={dateString} />
+                        <input type="text" value={new Date(licence.issue_date).toLocaleDateString()} readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={expe} />
+                        <input type="text" value={new Date(licence.exp_date).toLocaleDateString()} readOnly/>
                     </tr>
                 </tbody>
             </table>

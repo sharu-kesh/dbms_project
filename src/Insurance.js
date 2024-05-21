@@ -1,30 +1,41 @@
-import { useState,useEffect} from "react"
+import { useEffect, useState} from "react"
 import axios from "axios"
 axios.defaults.withCredentials = true;
-export default function Insurance({userId}){
+
+export default function Insurance(){
+    const [error,setError] = useState("")
+  
     const [insurance,setInsurance] = useState({
         issue_date:new Date(),
         exp_date:new Date()
     })
     const [expiry,setExpiry]=useState("");
-    useEffect(function(){
-        async function getInsurance(){
-            try {
-                const respon = await axios.get(`http://localhost:5000/home/insurance`)
-                console.log(respon)
-                setInsurance(respon.data.data)
-                setExpiry("hello")
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        getInsurance()
-    },[userId])
+    
+       
+        useEffect(
+            function(){
+                async function getInsurance(){
+                    try {
+                        const respon = await axios.get(`http://localhost:5000/home/insurance`)
+                        console.log(respon)
+                        setInsurance(respon.data.data)    
+                        setExpiry("hello")
+                    } catch (error) {
+                        console.log(error)
+                        if (error?.response?.data?.message) {
+                            setError(error.response.data.message);
+                          } else {
+                            setError("Something went wrong! Please try again.");
+                          }
+                    }
+                }
+                getInsurance()                
+            },[]
+        )
+        
+        
+    
     console.log(insurance)
-   const idate=new Date(insurance.issue_date);
-   var dateString=idate.toJSON().split('T')[0];
-   const exp=new Date(insurance.exp_date);
-   var expe=exp.toJSON().split('T')[0];
     return(
         <div className="complaintt">
         <div className="complaintForm">
@@ -54,19 +65,19 @@ export default function Insurance({userId}){
                 <thead>DETAILS</thead>
                 <tbody>
                     <tr>
-                        <input type="text" value={insurance.insurance_no} />
+                        <input type="text" value={insurance.insurance_no} readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={insurance.scheme_no}/>
+                        <input type="text" value={insurance.scheme_no}readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={insurance.ins_provider}/>
+                        <input type="text" value={insurance.ins_provider}readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={dateString} />
+                        <input type="text" value={new Date(insurance.issue_date).toLocaleDateString()} readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={expe} />
+                        <input type="text" value={new Date(insurance.exp_date_date).toLocaleDateString()} readOnly/>
                     </tr>
                 </tbody>
             </table>

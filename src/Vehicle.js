@@ -1,24 +1,31 @@
 import axios from "axios"
-import { useState,useEffect } from "react";
+import { useEffect, useState } from "react";
 axios.defaults.withCredentials = true;
 export default function Vehicle({userId}){
+    const [error,setError] = useState("")
     const [vehicle,setVehicle] = useState({
         registration_date:new Date()
     });
-    useEffect(function(){
+useEffect(
+    function()
+    {
         async function getVehicle(){
             try {
                 const respon = await axios.get(`http://localhost:5000/home/vehicle`)
                 setVehicle(respon.data.data)
             } catch (error) {
                 console.log(error)
+                if (error?.response?.data?.message) {
+                    setError(error.response.data.message);
+                  } else {
+                    setError("Something went wrong! Please try again.");
+                  }
             }
         }
         getVehicle()
-    },[userId])
+    },[]
+)    
     console.log(vehicle)
-   const redate=new Date(vehicle.registration_date);
-   var dateString=redate.toJSON().split('T')[0];
     return(
         <div className="complaintt">
         <div className="complaintForm">
@@ -51,22 +58,22 @@ export default function Vehicle({userId}){
                 <thead>DETAILS</thead>
                 <tbody>
                     <tr>
-                        <input type="text" value={vehicle.registration_no} />
+                        <input type="text" value={vehicle.registration_no} readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={dateString}/>
+                        <input type="text" value={new Date(vehicle.registration_date).toLocaleDateString()}readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={vehicle.vehicle_make}/>
+                        <input type="text" value={vehicle.vehicle_make}readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={vehicle.vehicle_model} />
+                        <input type="text" value={vehicle.vehicle_model} readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={vehicle.vin} />
+                        <input type="text" value={vehicle.vin} readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={vehicle.fuel_type} />
+                        <input type="text" value={vehicle.fuel_type} readOnly/>
                     </tr>
                 </tbody>
             </table>

@@ -18,7 +18,6 @@ async function handleSubmit(e){
     const response = await axios.post("http://localhost:5000/user/login",data)
     //console.log(response.data)    
     if(response.data.success){
-        setUserId(response.data.data);
         navigate("/home")
     }else{
         console.log(response.data.message)
