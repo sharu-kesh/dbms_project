@@ -610,4 +610,24 @@ background-image: linear-gradient(316deg, #50d8d7 0%, #923993 74%);
     border-radius: 24px;
     min-height: 200px;
 }
-
+.outer_button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Adjust as needed */
+  }
+  
+  .button_container {
+    display: flex;
+    gap: 20px; /* Adjust spacing between buttons as needed */
+  }
+  
+  .button_container button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 15px;
+    color:white;
+    background: blue;
+  }
+  

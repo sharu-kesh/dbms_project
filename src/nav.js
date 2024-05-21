@@ -19,7 +19,7 @@ function Nav(){
                     </div>
                 </li>
                 </div>
-                <li><Link to="/home/complaint">Complaint</Link></li>
+                <li><Link to="/home/complaint_home">Complaint</Link></li>
                 <li><a href='/'>Logout</a></li>
             </ul>
         </nav>

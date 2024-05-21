@@ -25,6 +25,8 @@ import Admin_home from "./Admin_home"
 import {BrowserRouter,Routes,Route} from "react-router-dom"
 import Transfer_details from "./Transfer_details"
 import Admin_vehicle from "./admn_vehicle"
+import Complaint_home from "./complaint_home"
+import User_more_details from "./user_more_details"
 function App() {
 
 
@@ -39,7 +41,8 @@ function App() {
       <Route path="/transfer_details" element={<Transfer_details/>}/>
       <Route path="/home/vehicle" element={<Vehicle/>}/>
       <Route path="/about" element={<About/>}/>
-      <Route path="/home/complaint" element={<Complaint/>}/>
+      <Route path="/home/complaint_home/complaint" element={<Complaint/>}/>
+      <Route path="/home/complaint_home" element={<Complaint_home/>}/>
       <Route path="/home/insurance" element={<Insurance />}/>
       <Route path="/home/pollution" element={<Pollution />}/>
       <Route path="/police" element={<Police/>}/>
@@ -62,6 +65,8 @@ function App() {
       <Route path="/police/police_home/police_vehicle/home_police/insurance" element={<Insurance/>}/>
       <Route path="/police/police_home/police_vehicle/home_police/pollution" element={<Pollution/>}/>
       <Route path="/police/police_home/more_details" element={<More_details/>}/>
+      <Route path="/home/complaint_home/user_more_details" element={<User_more_details/>}/>
+
 
 
 
