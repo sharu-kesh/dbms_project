@@ -229,7 +229,7 @@ body{
 .vehicle a{
     display: flex;
     text-decoration: none;
-    padding:2.6rem;
+    padding:2rem;
 }
 .vehicle .content{
     position: absolute;
