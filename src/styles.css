@@ -6,6 +6,7 @@
 body{
     margin: 0;
     overflow-x: hidden;
+    
     /* display: flex; */
     /* align-items: center;
     justify-content: center; */
@@ -53,7 +54,7 @@ body{
 .nav li:hover{
     background-color: #189AB4;
     align-items: stretch;
-    /* max-height:100px; */
+    max-height:100px
 }
 .container{
     margin:0;

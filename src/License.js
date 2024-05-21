@@ -1,24 +1,66 @@
-export default function License(){
+import { useState,useEffect} from "react"
+import axios from "axios"
+axios.defaults.withCredentials = true;
+export default function License({userId}){
+    const [licence,setLicence] = useState({
+        issue_date:new Date(),
+        exp_date:new Date()
+    });
+    const [expiry,setExpiry]=useState("");
+    useEffect(function(){
+        async function getLicence(){
+            try {
+                const respon = await axios.get(`http://localhost:5000/home/licence`)
+                console.log(respon)
+                setLicence(respon.data.data)
+                setExpiry("hello")
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        getLicence()
+    },[userId])
+    console.log(licence)
+   const idate=new Date(licence.issue_date);
+   var dateString=idate.toJSON().split('T')[0];
+   const exp=new Date(licence.exp_date);
+   var expe=exp.toJSON().split('T')[0];
     return(
-        <>
-        <div className="l">
-        <div className="pcontainer">
-            <form action="">
-                <div className="pinput_box">
-            <label htmlFor="lno">Licence Number</label>
-            <input type="text" />
+        <div className="complaintt">
+        <div className="complaintForm">
+        <div className="complaintTitle">LICENCE DETAILS</div>
+            <div className="complaintTable">
+            <table className="t1">
+              <thead>FIELDS</thead>
+              <tbody>
+                    <tr>
+                        <label htmlFor="">LICENCE NUMBER</label>
+                    </tr>
+                    <tr>
+                        <label htmlFor="">ISSUE DATE</label>
+                    </tr>
+                    <tr>
+                        <label htmlFor="">EXPIRY DATE</label>
+                    </tr>
+              </tbody>
+            </table>
+            <table className="t2">
+                <thead>DETAILS</thead>
+                <tbody>
+                    <tr>
+                        <input type="text" value={licence.licence_no} />
+                    </tr>
+                    <tr>
+                        <input type="text" value={dateString} />
+                    </tr>
+                    <tr>
+                        <input type="text" value={expe} />
+                    </tr>
+                </tbody>
+            </table>
             </div>
-            <div className="pinput_box">
-            <label htmlFor="IDate">Issue Date</label>
-            <input type="date" />
-            </div>
-            <div className="pinput_box">
-            <label htmlFor="EDate">Expiry Date</label>
-            <input type="date" />
-            </div>
-            </form>
+            {expiry && <p id='err'>{expiry}</p>}
         </div>
         </div>
-        </>
     );
 }

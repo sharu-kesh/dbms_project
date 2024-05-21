@@ -9,12 +9,14 @@ export default function User({setUserId}){
     const [password,setPassword] = useState("")
     const navigate = useNavigate()
     const [error,setError] = useState("")
+    const [isLoggedin, setIsLoggedin] = useState(false);
+
 async function handleSubmit(e){
     e.preventDefault()
     const data={email,password}
     try{
     const response = await axios.post("http://localhost:5000/user/login",data)
-    console.log(response.data)
+    //console.log(response.data)    
     if(response.data.success){
         setUserId(response.data.data);
         navigate("/home")
@@ -55,7 +57,7 @@ useEffect(function(){
             </div>
             <input type='submit' className="submit" value='Login'
             />
-            <p>Don't have an account?  <span onClick={()=>navigate("/signup1")} style={{color:"white",fontSize:"20px",cursor:"pointer"}}>Register</span></p>
+            <p>Don't have an account?  <span onClick={()=>navigate("/user/signup1")} style={{color:"white",fontSize:"20px",cursor:"pointer"}}>Register</span></p>
         </form>
         {error && <p id="err">{error}</p>}
 
