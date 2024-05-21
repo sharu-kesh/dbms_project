@@ -21,7 +21,10 @@ import Police_vehicle from './police_vehicle'
 import Home_police from './home_police'
 import Complaint from "./complaint"
 import More_details from "./More_details"
+import Admin_home from "./Admin_home"
 import {BrowserRouter,Routes,Route} from "react-router-dom"
+import Transfer_details from "./Transfer_details"
+import Admin_vehicle from "./admn_vehicle"
 function App() {
 
 
@@ -30,7 +33,10 @@ function App() {
     <Routes>
       <Route path="/" element={<Login/>}/>
       <Route path="/admin" element={<Admin/>}/>
+      <Route path="/admin/admin_home" element={<Admin_home/>}/>
+      <Route path="/admin/admin_home/admin_vehicle" element={<Admin_vehicle/>}/>
       <Route path="/home" element={<Home/>}/>
+      <Route path="/transfer_details" element={<Transfer_details/>}/>
       <Route path="/home/vehicle" element={<Vehicle/>}/>
       <Route path="/about" element={<About/>}/>
       <Route path="/home/complaint" element={<Complaint/>}/>

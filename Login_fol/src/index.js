@@ -299,6 +299,26 @@ app.post("/police/login",async(req,res,next)=>{
         next(error)
     }
 })
+app.post("/rto/login",async(req,res,next)=>{
+    console.log(req.body)
+    const {rtoid,password}=req.body
+    try{
+        const response=await db.query("select * from admins where office_id=$1",[rtoid]);
+        if(!response.rowCount){
+            console.log("here")
+            return next(errorHandler(404,"User not found"))
+        }else{
+            const validPwd = password === response.rows[0].password;
+            if(!validPwd) return next(errorHandler(401,"Wrong credentials"))
+            req.session.rto = {id:response.rows[0].office_id}
+            req.session.user = {id:null}
+            res.status(200).json({success:true, data:response.rows})
+        }
+    }catch(error){
+        console.log(error)
+        next(error)
+    }
+})
 
 app.post("/police/complaint/update",async(req,res,next)=>{
     console.log(req.body)
@@ -491,6 +511,26 @@ app.get("/home/transfer/owner",async(req,res,next)=>{
 })
 
 app.post("/police/login/vehicle",async(req,res,next)=>{
+    try{
+        console.log(req.body)
+        const regNo = req.body.regno
+        const response = await db.query("select registration_no from vehicle_details;")
+        let regisArr = (response.rows).map((item) => item.registration_no)
+        console.log(regisArr)
+        if(!(regisArr.includes(regNo)))
+            return next(errorHandler(401,"Wrong credentials"))
+            req.session.police.regNo = regNo;
+            console.log(req.session.police)
+            res.status(200).json({success:true})
+
+    }
+    catch(error)
+    {
+        console.log(error)
+        next(error)
+    }
+})
+app.post("/rto/login/vehicle",async(req,res,next)=>{
     try{
         console.log(req.body)
         const regNo = req.body.regno

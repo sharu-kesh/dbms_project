@@ -28,12 +28,6 @@ export default function License(){
     },[])
 
     console.log(licence)
-   const idate=new Date(licence.issue_date);
-   idate.setDate(idate.getDate()+1)
-   var dateString=idate.toJSON().split('T')[0];
-   const exp=new Date(licence.exp_date);
-   exp.setDate(exp.getDate()+1)
-   var expe=exp.toJSON().split('T')[0];
     return(
         <div className="complaintt">
         <div className="complaintForm">
@@ -57,13 +51,13 @@ export default function License(){
                 <thead>DETAILS</thead>
                 <tbody>
                     <tr>
-                        <input type="text" value={licence.licence_no} />
+                        <input type="text" value={licence.licence_no} readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={dateString} />
+                        <input type="text" value={new Date(licence.issue_date).toLocaleDateString()} readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={expe} />
+                        <input type="text" value={new Date(licence.exp_date).toLocaleDateString()} readOnly/>
                     </tr>
                 </tbody>
             </table>

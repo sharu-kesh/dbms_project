@@ -62,25 +62,25 @@ useEffect(
                 <thead>DETAILS</thead>
                 <tbody>
                     <tr>
-                        <input type="text" value={owner.fullname} />
+                        <input type="text" value={owner.fullname} readOnly/>
                     </tr>
                     <tr>
                         <input type="text" value={12}/>
                     </tr>
                     <tr>
-                        <input type="text" value={owner.gender}/>
+                        <input type="text" value={owner.gender}readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={owner.phone_no} />
+                        <input type="text" value={owner.phone_no} readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={owner.aadhar_no} />
+                        <input type="text" value={owner.aadhar_no} readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={owner.email} />
+                        <input type="text" value={owner.email} readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={owner.address} />
+                        <input type="text" value={owner.address} readOnly/>
                     </tr>
                 </tbody>
             </table>

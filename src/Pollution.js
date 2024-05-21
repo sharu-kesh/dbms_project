@@ -28,11 +28,7 @@ export default function Pollution(){
             getPollution()
         },[]
     )
-
     console.log(pollution)
-    const dateof=new Date(pollution.issue_date)
-    dateof.setDate(dateof.getDate() + 1);
-    const dateString=dateof.toJSON().split('T')[0];
     return(
         <div className="complaintt">
         <div className="complaintForm">
@@ -65,22 +61,22 @@ export default function Pollution(){
                 <thead>DETAILS</thead>
                 <tbody>
                     <tr>
-                        <input type="text" value={pollution.pollution_cer_no} />
+                        <input type="text" value={pollution.pollution_cer_no} readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={dateString}/>
+                        <input type="text" value={new Date(pollution.issue_date).toLocaleDateString()}readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={pollution.validation}/>
+                        <input type="text" value={pollution.validation}readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={pollution.vehicle_make} />
+                        <input type="text" value={pollution.vehicle_make} readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={pollution.vehicle_model} />
+                        <input type="text" value={pollution.vehicle_model} readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={pollution.engine_no} />
+                        <input type="text" value={pollution.engine_no} readOnly/>
                     </tr>
                 </tbody>
             </table>

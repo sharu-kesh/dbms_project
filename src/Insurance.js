@@ -36,12 +36,6 @@ export default function Insurance(){
         
     
     console.log(insurance)
-   const idate=new Date(insurance.issue_date);
-   idate.setDate(idate.getDate()+1)
-   var dateString=idate.toJSON().split('T')[0];
-   const exp=new Date(insurance.exp_date);
-   exp.setDate(exp.getDate()+1)
-   var expe=exp.toJSON().split('T')[0];
     return(
         <div className="complaintt">
         <div className="complaintForm">
@@ -71,19 +65,19 @@ export default function Insurance(){
                 <thead>DETAILS</thead>
                 <tbody>
                     <tr>
-                        <input type="text" value={insurance.insurance_no} />
+                        <input type="text" value={insurance.insurance_no} readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={insurance.scheme_no}/>
+                        <input type="text" value={insurance.scheme_no}readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={insurance.ins_provider}/>
+                        <input type="text" value={insurance.ins_provider}readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={dateString} />
+                        <input type="text" value={new Date(insurance.issue_date).toLocaleDateString()} readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={expe} />
+                        <input type="text" value={new Date(insurance.exp_date_date).toLocaleDateString()} readOnly/>
                     </tr>
                 </tbody>
             </table>

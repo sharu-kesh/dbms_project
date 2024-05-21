@@ -36,6 +36,7 @@ function Transfer() {
     const [bmail,setBmail]=useState("");
     const [baadhar,setBaadhar]=useState("");
     const [blno,setBlno]=useState("");
+    const [sdate,setSdate]=useState("")
 
     const [error,setError] = useState("");
     const [success,setSuccess]=useState("")
@@ -48,6 +49,8 @@ function Transfer() {
     const fmail=useRef("");
     const faadhar=useRef("");
     const fregno=useRef("");
+    const fsdate=useRef("");
+
 
     const cfname=useRef("");
     const clname=useRef("");
@@ -62,7 +65,7 @@ function Transfer() {
     const navigate = useNavigate()
     async function handleClick(e){
     e.preventDefault()
-    const data={chano,bfname,blname,bgender,bdob,baddress,bmobile,bmail,baadhar,blno};
+    const data={sfname:owner.fname,slname:owner.lname,sgender:owner.gender,sdob:owner.dob,saddress:owner.address,smobile:owner.phone_no,smail:owner.email,saadhar:owner.aadhar,sregno:owner.registration_no,chano,sdate,bfname,blname,bgender,bdob,baddress,bmobile,bmail,baadhar,blno};
     try{
     const response = await axios.post("http://localhost:5000/home/transfer",data)
     if(response.data.success){
@@ -75,6 +78,7 @@ function Transfer() {
         fdob.current.value="";
         faadhar.current.value="";
         fregno.current.value="";
+        fsdate.current.value="";
 
         cfname.current.value="";
         clname.current.value="";
@@ -88,7 +92,7 @@ function Transfer() {
 
 
         setSuccess("Your response has been recorded!");
-        // navigate("/complaint")
+        navigate("/complaint")
     }else{
         console.log(response.data.message)
         setError(response.data.message)
@@ -112,43 +116,47 @@ function Transfer() {
                 <tbody>
                     <tr>
                         <label htmlFor="">First Name</label>
-                        <input type="text" ref={ffname} value={owner.fname} />
+                        <input type="text" ref={ffname} value={owner.fname} readOnly/>
                     </tr>
                     <tr>
                         <label htmlFor="">Last Name</label>
-                        <input type="text" ref={flname}  value={owner.lname}/>
+                        <input type="text" ref={flname}  value={owner.lname}readOnly/>
                     </tr>
                     <tr>
                         <label htmlFor="">Gender</label>
-                        <input type="text" ref={fgen} value={owner.gender} />
+                        <input type="text" ref={fgen} value={owner.gender}readOnly />
                     </tr>
                     <tr>
                         <label htmlFor=""> Date of Birth</label>
-                        <input type="text" ref={fdob} value={dateofbirth}/>
+                        <input type="text" ref={fdob} value={dateofbirth}readOnly/>
                     </tr>
                     <tr>
                         <label htmlFor="">Address</label>
-                        <textarea name="" ref={fadd} value={owner.address}></textarea>
+                        <textarea name="" ref={fadd} value={owner.address}readOnly></textarea>
                     </tr>
                     <tr>
                         <label htmlFor="">Mobile No.</label>
-                        <input type="text" ref={fmob}  value={owner.phone_no}/>
+                        <input type="text" ref={fmob}  value={owner.phone_no}readOnly/>
                     </tr>
                     <tr>
                         <label htmlFor="">E-Mail ID</label>
-                        <input type="email" ref={fmail} value={owner.email} />
+                        <input type="text" ref={fmail} value={owner.email} readOnly/>
                     </tr>
                     <tr>
                         <label htmlFor="">AADHAR NO.</label>
-                        <input type="email" ref={faadhar} value={owner.aadhar_no} />
+                        <input type="text" ref={faadhar} value={owner.aadhar_no} readOnly/>
                     </tr>
                     <tr>
                         <label htmlFor="">VEHICLE REGISTRATION NO.</label>
-                        <input type="email" ref={fregno} value={owner.registration_no}/>
+                        <input type="text" ref={fregno} value={owner.registration_no}readOnly/>
                     </tr>
                     <tr>
                         <label htmlFor="">CHASSIS NO.(LAST 5 DIGITS)</label>
-                        <input type="email" ref={fregno} onChange={(e)=>setChano(e.target.value)} required/>
+                        <input type="text" ref={fregno} onChange={(e)=>setChano(e.target.value)} required/>
+                    </tr>
+                    <tr>
+                        <label htmlFor="">SOLD DATE</label>
+                        <input type="date" ref={fsdate} onChange={(e)=>setSdate(e.target.value)} required/>
                     </tr>
                 </tbody>
             </table>
@@ -185,11 +193,11 @@ function Transfer() {
                     </tr>
                     <tr>
                         <label htmlFor="">AADHAR NO.</label>
-                        <input type="email" ref={caadhar} placeholder="enter aadhar number" onChange={(e)=>setBaadhar(e.target.value)}required/>
+                        <input type="text" ref={caadhar} placeholder="enter aadhar number" onChange={(e)=>setBaadhar(e.target.value)}required/>
                     </tr>
                     <tr>
                         <label htmlFor="">LICENCE NO.</label>
-                        <input type="email" ref={clno} placeholder="enter licence number" onChange={(e)=>setBlno(e.target.value)}required/>
+                        <input type="text" ref={clno} placeholder="enter licence number" onChange={(e)=>setBlno(e.target.value)}required/>
                     </tr>
                 </tbody>
             </table>

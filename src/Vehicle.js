@@ -26,8 +26,6 @@ useEffect(
     },[]
 )    
     console.log(vehicle)
-   const redate=new Date(vehicle.registration_date);
-   var dateString=redate.toJSON().split('T')[0];
     return(
         <div className="complaintt">
         <div className="complaintForm">
@@ -60,22 +58,22 @@ useEffect(
                 <thead>DETAILS</thead>
                 <tbody>
                     <tr>
-                        <input type="text" value={vehicle.registration_no} />
+                        <input type="text" value={vehicle.registration_no} readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={dateString}/>
+                        <input type="text" value={new Date(vehicle.registration_date).toLocaleDateString()}readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={vehicle.vehicle_make}/>
+                        <input type="text" value={vehicle.vehicle_make}readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={vehicle.vehicle_model} />
+                        <input type="text" value={vehicle.vehicle_model} readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={vehicle.vin} />
+                        <input type="text" value={vehicle.vin} readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={vehicle.fuel_type} />
+                        <input type="text" value={vehicle.fuel_type} readOnly/>
                     </tr>
                 </tbody>
             </table>
