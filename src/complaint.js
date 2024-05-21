@@ -13,7 +13,6 @@ function Complaint() {
     const [place,setPlace]=useState("");
     const [descr,setDescr]=useState("");
     const [error,setError] = useState("");
-    const [success,setSuccess]=useState("")
     const fname=useRef("");
     const fgen=useRef("");
     const fdob=useRef("");
@@ -41,8 +40,8 @@ function Complaint() {
         fdob.current.value="";
         fmdate.current.value="";
 
-        setSuccess("Your response has been recorded!");
-        navigate("/home")
+       alert("Your response has been recorded")
+        navigate(".")
     }else{
         console.log(response.data.message)
         setError(response.data.message)
@@ -105,11 +104,11 @@ function Complaint() {
                     </tr>
                     <tr>
                         <label htmlFor="">Place of Occurence</label>
-                        <textarea name="" id=""ref={fplace} placeholder="Place of Occurence (Max.200 characters allowed)" onChange={(e)=>setPlace(e.target.value)}></textarea>
+                        <textarea ref={fplace} placeholder="Place of Occurence (Max.200 characters allowed)" onChange={(e)=>setPlace(e.target.value)}></textarea>
                     </tr>
                     <tr>
                         <label htmlFor="">Description</label>
-                        <textarea name="" id="" ref={fdescr} placeholder="Complaint Description (Max.200 characters allowed)" onChange={(e)=>setDescr(e.target.value)}></textarea>
+                        <textarea ref={fdescr} placeholder="Complaint Description (Max.200 characters allowed)" onChange={(e)=>setDescr(e.target.value)}></textarea>
                     </tr>
                 </tbody>
             </table>
@@ -118,7 +117,6 @@ function Complaint() {
         <button type="submit" onClick={handleClick}>Register</button>
         </div>
         {error && <p id="err">{error}</p>}
-        {success && <p id='succ'>{success}</p>}
         
     </div>
     </div>

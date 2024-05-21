@@ -260,17 +260,18 @@ app.get("/police/home",async(req,res,next)=>
     }
     
 })
-app.get("/police/home/:id",async(req,res,next)=>
+app.get("/user/home",async(req,res,next)=>
     {
-    const id = req.params.id
+    var stationId =  req.session.user.id;
+    console.log(stationId)
     try{
-        const response = await db.query("select * from complaint_details where complaint_id = $1",[id])
+        const response = await db.query("select * from complaint_details where user_id = $1",[stationId])
         if(!response.rowCount){
             console.log("here")
             return next(errorHandler(404,"Details Not Fetched"))
         }else{
             console.log(response.rows)
-            res.status(200).json({success:true, data:response.rows[0]})
+            res.status(200).json({success:true, data:response.rows})
     }}
     catch(error)
     {
@@ -279,6 +280,29 @@ app.get("/police/home/:id",async(req,res,next)=>
     }
     
 })
+app.get("/user/home/complaint/:id",async(req,res,next)=>
+    {
+    var complaintId =  req.params.id;
+    try{
+        console.log(complaintId)
+        const response = await db.query("select * from complaint_details natural join police where complaint_id = $1",[complaintId])
+        console.log(1000)
+        if(!response.rowCount){
+            console.log("here")
+            return next(errorHandler(404,"Details Not Fetched"))
+        }else{
+            console.log(response.rows)
+            const {password, ...data} = response.rows[0];
+            res.status(200).json({success:true, data})
+    }}
+    catch(error)
+    {
+        console.log(error)
+        next(error)
+    }
+    
+})
+
 app.post("/police/login",async(req,res,next)=>{
     console.log(req.body)
     const {stationId,policePassword}=req.body
