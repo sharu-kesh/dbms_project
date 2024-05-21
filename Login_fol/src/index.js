@@ -510,6 +510,105 @@ app.get("/home/transfer/owner",async(req,res,next)=>{
     }
 })
 
+app.get("/home/transfer",async(req,res,next)=>{
+    const userId = req.session.user.id;
+    console.log("userID : ",userId)
+    try {
+        const response = await db.query("select * from transfer where user_id = $1;",[userId])
+        if(response.rowCount)
+            res.status(200).json({success:true})
+        else
+            res.status(200).json({success:false})
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+})
+
+app.post("/home/transfer",async(req,res,next)=>{
+    const value = req.body;
+    let sellerId;
+    let buyerId;
+    const regNo = value.sregno;
+    const chassisNo = value.chano;
+    const userId = req.session.user.id;
+    const soldDate = value.sdate;
+    value.userId = userId;
+    const valArr = Object.values(value);
+    const sellerArr = valArr.slice(1,9);
+    const buyerArr = valArr.slice(-11,-2);
+    console.log(valArr);
+    console.log(sellerArr)
+    console.log(buyerArr)
+    console.log(regNo)
+    try{
+        const response = await db.query("select substring(vin,13,5) as chassis from vehicle_details where registration_no = $1;",[regNo])
+        const validChassis = (response.rows[0].chassis) === (chassisNo)
+        if(!validChassis) return next(errorHandler(401,"Wrong  CHASSIS_NUMBER "))
+        try{
+        try{
+            try{
+                const response4 =await db.query("select phone_no from seller_details");
+                console.log(response4.rows)
+                let phoneArr = (response4.rows).map((item) => item.phone_no)
+                 console.log(phoneArr)
+                if((phoneArr.includes(sellerArr[4])))  return next(errorHandler(401,"already exists"))
+            }
+            catch(error)
+            {
+                console.log(error)
+                next(error)
+            }
+                       
+            const response2 = await db.query("insert into seller_details(fname,lname,dob,gender,phone_no,aadhar_no,email,address) values ($1,$2,$3,$4,$5,$6,$7,$8);",sellerArr);
+        try{
+            const response3 = await db.query("select seller_id from seller_details where phone_no = $1",[sellerArr[4]]);
+            console.log(response3.rows)
+            sellerId = response3.rows[0].seller_id;
+        }
+        catch(error)
+        {
+            console.log(error)
+            next(error)
+        }
+        try{
+            const response5 = await db.query("insert into buyer_details(fname,lname,dob,gender,phone_no,aadhar_no,email,address,licence_no) values ($1,$2,$3,$4,$5,$6,$7,$8,$9);",buyerArr); 
+            try{
+                const response6 = await db.query("select buyer_id from buyer_details where phone_no = $1",[buyerArr[4]]);
+                console.log(response6.rows)
+                buyerId = response6.rows[0].buyer_id;
+            }
+            catch(error)
+            {
+                console.log(error)
+                next(error)
+            }
+        }
+        catch(error)
+        {
+            console.log(error)
+            next(error)
+        }
+        }
+        catch(error)
+        {
+            console.log(error)
+            next(error)
+        }
+        const response1 = await db.query("INSERT INTO transfer(seller_id,buyer_id,vehicle_no,chassis_no,sold_date,user_id) values($1,$2,$3,$4,$5,$6);",[sellerId,buyerId,regNo,chassisNo,soldDate,valArr[valArr.length-1]])
+        res.status(200).json({success:true})
+        }
+        catch(error){
+            console.log(error)
+            next(error)
+        }
+    }
+    catch(error){
+        console.log(error)
+        next(error)
+    }
+})
+
 app.post("/police/login/vehicle",async(req,res,next)=>{
     try{
         console.log(req.body)

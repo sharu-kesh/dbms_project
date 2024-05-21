@@ -1,12 +1,12 @@
 import {Link} from 'react-router-dom'
-function Nav(){
+function Nav(props){
     return(
         <nav className="nav">
             <h2>Know About Your Vehicle</h2>
             <ul>
             <div class="vertical-line"></div>
                 <li><a href="/home">Home</a></li>
-                <li><a href="/home/transfer">Transfer Onwership</a></li>
+                <li><a href={props.tPath}>Transfer Onwership</a></li>
                 <div className="vehicle">
                 <li><a href="#">Info</a>
                     <div className="content">

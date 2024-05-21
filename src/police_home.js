@@ -38,7 +38,7 @@ async function updateComplaint(complaintId) {
   try {
     const response = await axios.post("http://localhost:5000/police/complaint/update", { complaint_id: complaintId });
     console.log(response.data);
-    window.location.reload(false);
+    window.location.reload(false);  
   } catch (error) {
     console.log("An error occurred while updating the complaint:");
     console.log(error);

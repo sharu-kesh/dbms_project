@@ -9,11 +9,34 @@ import img5 from './v-homologation.png'
 import img6 from './v-echallan-icon.png'
 import img7 from './v-vehicle-registration.png'
 import axios from "axios"
+import { useEffect, useState } from "react"
 axios.defaults.withCredentials = true;
 export default function Home(){
+    const [error,setError] = useState("") 
+    const [cont,setCont] = useState(false) 
+    useEffect(
+        function(){
+            async function checkUser(){
+                
+                try {
+                    const response = await axios.get("http://localhost:5000/home/transfer")
+                console.log(response.data.success)
+                setCont(response.data.success)
+                } 
+                    
+                catch (error) {
+                    console.log(error)
+                if (error?.response?.data?.message)
+                    setError(error?.response?.data?.message);
+                  else setError("Something went wrong! Please try again.");
+                }
+                    
+            }
+            checkUser();
+        },[])
     return(
         <>
-        <Nav />
+        <Nav tPath = {cont?"/home/owner":"/home/transfer"}/>
         <div className="image">
             <img src={bike} alt=""></img>
         </div>
@@ -27,7 +50,7 @@ export default function Home(){
         <Card imageUrl={img3} title={"License"} text={"Get your license details online"} page="/home/license" />
         <Card imageUrl={img4} title={"Insurance"} text={"Know about your vehicle's insurance"} page="/home/insurance" />
         <Card imageUrl={img5} title={"Owner Details"} text={"Check for your details"} page="/home/owner" />
-        <Card imageUrl={img6} title={"Transfer Ownership"} text={"Udpdate the ownership"} page="/home/transfer" />
+        <Card imageUrl={img6} title={"Transfer Ownership"} text={"Udpdate the ownership"} page={cont?"/home/owner":"/home/transfer"} />
         <Card imageUrl={img7} title={"Update Details"} text={"Udpdate Your personal details"} page="/home/update" />
 
         

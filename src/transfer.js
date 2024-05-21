@@ -1,28 +1,31 @@
 import { useNavigate } from 'react-router-dom';
-import {useState,useRef} from 'react';
+import {useState,useRef, useEffect} from 'react';
 import axios from 'axios';
 axios.defaults.withCredentials = true;
-let isFirst = true;
 function Transfer() {
     const [owner,setOwner] = useState({
         dob:new Date()
     })
-    async function getOwner(){
-        try {
-            const respon = await axios.get(`http://localhost:5000/home/transfer/owner`)
-            console.log(respon)
-            setOwner(respon.data.data)
-            // console.log(owner.fullname)
-            isFirst = false;
 
-        } catch (error) {
-            console.log(error)
+useEffect(
+    function(){
+        async function getOwner(){
+            try {
+                const respon = await axios.get(`http://localhost:5000/home/transfer/owner`)
+                console.log(respon)
+                setOwner(respon.data.data)
+                // console.log(owner.fullname)
+    
+            } catch (error) {
+                console.log(error)
+                if (error?.response?.data?.message)
+                    setError(error?.response?.data?.message);
+                  else setError("Something went wrong! Please try again.");
+            }
         }
-    }
-    if(isFirst)
-        {
-            getOwner()
-        }
+        getOwner()
+    },[]
+)
     const dateof=new Date(owner.dob)
     dateof.setDate(dateof.getDate() + 1);
     const dateofbirth=dateof.toJSON().split('T')[0];
@@ -65,7 +68,8 @@ function Transfer() {
     const navigate = useNavigate()
     async function handleClick(e){
     e.preventDefault()
-    const data={sfname:owner.fname,slname:owner.lname,sgender:owner.gender,sdob:owner.dob,saddress:owner.address,smobile:owner.phone_no,smail:owner.email,saadhar:owner.aadhar,sregno:owner.registration_no,chano,sdate,bfname,blname,bgender,bdob,baddress,bmobile,bmail,baadhar,blno};
+    const data={sregno:owner.registration_no,sfname:owner.fname,slname:owner.lname,sdob:owner.dob,sgender:owner.gender,smobile:owner.phone_no,saadhar_no:owner.aadhar_no,smail:owner.email,saddress:owner.address,chano,bfname,blname,bdob,bgender,bmobile,baadhar,bmail,baddress,blno,sdate};
+    console.log(data)
     try{
     const response = await axios.post("http://localhost:5000/home/transfer",data)
     if(response.data.success){
@@ -91,8 +95,8 @@ function Transfer() {
         clno.current.value="";
 
 
-        setSuccess("Your response has been recorded!");
-        navigate("/complaint")
+        alert("Your response has been recorded!");
+        navigate("/home")
     }else{
         console.log(response.data.message)
         setError(response.data.message)
