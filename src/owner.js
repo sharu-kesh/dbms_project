@@ -27,6 +27,7 @@ useEffect(
      getOwner()
 },[]
 )
+const birth=new Date(owner.dob)
 
   return (
     <div className="complaintt">
