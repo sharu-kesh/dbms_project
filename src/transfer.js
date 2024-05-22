@@ -42,7 +42,6 @@ useEffect(
     const [sdate,setSdate]=useState("")
 
     const [error,setError] = useState("");
-    const [success,setSuccess]=useState("")
     const ffname=useRef("");
     const flname=useRef("");
     const fgen=useRef("");
@@ -209,9 +208,7 @@ useEffect(
         <div className="complaintButton">
         <button type="submit" onClick={handleClick}>Register</button>
         </div>
-        {error && <p id="err">{error}</p>}
-        {success && <p id='succ'>{success}</p>}
-        
+        {error && <p id="err">{error}</p>}        
     </div>
     </div>
   )

@@ -27,6 +27,7 @@ useEffect(
      getOwner()
 },[]
 )
+
   return (
     <div className="complaintt">
         <div className="complaintForm">
