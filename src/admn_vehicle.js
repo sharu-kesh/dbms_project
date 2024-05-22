@@ -11,7 +11,7 @@ function Admin_vehicle() {
         const response = await axios.post("http://localhost:5000/rto/login/vehicle",data)
         console.log(response.data)
         if(response.data.success){
-            navigate("./home_police")
+            navigate("./home_admin")
         }else{
             console.log(response.data.message)
             setError(response.data.message)

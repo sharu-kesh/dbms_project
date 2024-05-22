@@ -240,6 +240,42 @@ app.post("/user/login",async(req,res,next)=>{
     }
 })
 
+app.get("/admin/home",async(req,res,next)=>{
+    var rtoId = req.session.rto.id;
+    console.log(rtoId);
+    try {
+        const response = await db.query("select * from transfer_details where substring(registration_no,1,4) = $1",[rtoId]);
+        if(!response.rowCount){
+            console.log("here")
+            return next(errorHandler(404,"NO Details"))
+        }else{
+            console.log(response.rows)
+            res.status(200).json({success:true, data:response.rows})
+    }
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+})
+
+app.post("/admin/homedetails",async(req,res,next)=>{
+    var id = req.body.transferId;
+    console.log(id);
+    try {
+        const response = await db.query("select * from transfer_details where transfer_id = $1",[id]);
+        if(!response.rowCount){
+            console.log("here")
+            return next(errorHandler(404,"NO Details"))
+        }else{
+            console.log(response.rows)
+            res.status(200).json({success:true, data:response.rows})
+    }
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+})
+
 app.get("/police/home",async(req,res,next)=>
     {
     var stationId =  req.session.police.id;
@@ -364,9 +400,33 @@ app.post("/police/complaint/update",async(req,res,next)=>{
     }
 })
 
+app.post("/admin/transfer/update",async(req,res,next)=>{
+    console.log(req.body)
+    const arr = req.body
+    try {
+        const response = await db.query("update transfer set verify_date = (select current_date) where user_id = $1",[arr[0]]);
+        try {
+            const response2 = await db.query("update users set email = $2 where user_id = $1",arr.slice(0,2))
+            try {
+                const response2 = await db.query("update user_details set fname=$2,lname=$3,phone_no=$4,dob=$5,address=$6,aadhar_no=$7,gender=$8 where user_id = $1",[arr[0],arr[2],arr[3],arr[4],arr[5],arr[6],arr[7],arr[8]])
+                res.status(200).json({success:true})
+            } catch (error) {
+                console.log(error)
+            next(error)
+            }
+        } catch (error) {
+            console.log(error)
+            next(error)
+        }
+    } catch (error) {
+        console.log(error)
+        next(error)
+    }
+})
+
 app.get("/home/vehicle",async(req,res,next)=>{
     userId = req.session.user.id;
-    const regNo = req.session.police.regNo; 
+    const regNo = req.session.police1.regNumber; 
     try{  
         if(regNo)
             {
@@ -398,7 +458,7 @@ app.get("/home/vehicle",async(req,res,next)=>{
 
 app.get("/home/insurance",async(req,res,next)=>{
     userId = req.session.user.id; 
-    const regNo = req.session.police.regNo; 
+    const regNo = req.session.police1.regNumber; 
     try{  
         if(regNo)
             {
@@ -431,7 +491,7 @@ app.get("/home/insurance",async(req,res,next)=>{
 // app.get()
 app.get("/home/pollution",async(req,res,next)=>{
     userId = req.session.user.id;
-    const regNo = req.session.police.regNo; 
+    const regNo = req.session.police1.regNumber; 
     try{  
         if(regNo)
             {
@@ -462,7 +522,7 @@ app.get("/home/pollution",async(req,res,next)=>{
 
 app.get("/home/licence",async(req,res,next)=>{
     userId = req.session.user.id;
-    const regNo = req.session.police.regNo; 
+    const regNo = req.session.police1.regNumber; 
     try{  
         if(regNo)
             {
@@ -491,7 +551,7 @@ app.get("/home/licence",async(req,res,next)=>{
 
 app.get("/home/owner",async(req,res,next)=>{
     userId = req.session.user.id;
-    const regNo = req.session.police.regNo;
+    const regNo = req.session.police1.regNumber;
     try{
         
         if(regNo)
@@ -619,7 +679,7 @@ app.post("/home/transfer",async(req,res,next)=>{
             console.log(error)
             next(error)
         }
-        const response1 = await db.query("INSERT INTO transfer(seller_id,buyer_id,vehicle_no,chassis_no,sold_date,user_id) values($1,$2,$3,$4,$5,$6);",[sellerId,buyerId,regNo,chassisNo,soldDate,valArr[valArr.length-1]])
+        const response1 = await db.query("INSERT INTO transfer(seller_id,buyer_id,registration_no,chassis_no,sold_date,user_id) values($1,$2,$3,$4,$5,$6);",[sellerId,buyerId,regNo,chassisNo,soldDate,valArr[valArr.length-1]])
         res.status(200).json({success:true})
         }
         catch(error){
@@ -662,8 +722,8 @@ app.post("/rto/login/vehicle",async(req,res,next)=>{
         console.log(regisArr)
         if(!(regisArr.includes(regNo)))
             return next(errorHandler(401,"Wrong credentials"))
-            req.session.police.regNo = regNo;
-            console.log(req.session.police)
+            req.session.police1 = {regNumber : regNo};
+            console.log(req.session.police1)
             res.status(200).json({success:true})
 
     }

@@ -27,6 +27,8 @@ import Transfer_details from "./Transfer_details"
 import Admin_vehicle from "./admn_vehicle"
 import Complaint_home from "./complaint_home"
 import User_more_details from "./user_more_details"
+import Home_admin from "./home_admin"
+import Temp_transfer from "./temp_transfer"
 function App() {
 
 
@@ -37,8 +39,14 @@ function App() {
       <Route path="/admin" element={<Admin/>}/>
       <Route path="/admin/admin_home" element={<Admin_home/>}/>
       <Route path="/admin/admin_home/admin_vehicle" element={<Admin_vehicle/>}/>
+      <Route path="/admin/admin_home/admin_vehicle/home_admin" element={<Home_admin/>}/>
+      <Route path="/admin/admin_home/admin_vehicle/home_admin/owner" element={<Owner/>}/>
+      <Route path="/admin/admin_home/admin_vehicle/home_admin/insurance" element={<Insurance/>}/>
+      <Route path="/admin/admin_home/admin_vehicle/home_admin/licence" element={<License/>}/>
+      <Route path="/admin/admin_home/admin_vehicle/home_admin/pollution" element={<Pollution/>}/>
+      <Route path="/admin/admin_home/admin_vehicle/home_admin/vehicle" element={<Vehicle/>}/>
       <Route path="/home" element={<Home/>}/>
-      <Route path="/transfer_details" element={<Transfer_details/>}/>
+      <Route path="/transfer_details/:id" element={<Transfer_details/>}/>
       <Route path="/home/vehicle" element={<Vehicle/>}/>
       <Route path="/about" element={<About/>}/>
       <Route path="/home/complaint_home/complaint" element={<Complaint/>}/>
@@ -53,6 +61,7 @@ function App() {
       <Route path="/user/signup1/signup2/signup3" element={<Signup3 />}/>
       <Route path="/user/signup1/signup2/signup3/signup4" element={<Signup4 />}/>
       <Route path="/home/transfer" element={<Transfer/>}/>
+      <Route path="/home/temp_transfer" element={<Temp_transfer/>}/>
       <Route path="/home/license" element={<License />}/>
       <Route path="/home/owner" element={<Owner />}/>
       <Route path="/home/update" element={<Update/>}/>

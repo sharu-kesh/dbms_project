@@ -36,7 +36,7 @@ export default function Home(){
         },[])
     return(
         <>
-        <Nav tPath = {cont?"/home/owner":"/home/transfer"}/>
+        <Nav tPath = {cont?"/home/temp_transfer":"/home/transfer"}/>
         <div className="image">
             <img src={bike} alt=""></img>
         </div>
