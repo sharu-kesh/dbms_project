@@ -41,7 +41,7 @@ useEffect(function(){
         <form onSubmit={handleSubmit}>
             <h1>Admin-Login</h1>
             <div className="input-box">
-                <input type="text" placeholder='email' onChange={(e)=>setRtoid(e.target.value)} required />
+                <input type="text" placeholder='rto_id' onChange={(e)=>setRtoid(e.target.value)} required />
                 <MdEmail className='icon'/>
             </div>
             <div className="input-box">

@@ -627,7 +627,14 @@ app.get("/home/transfer",async(req,res,next)=>{
     const userId = req.session.user.id;
     console.log("userID : ",userId)
     try {
-        const response = await db.query("select * from transfer where user_id = $1;",[userId])
+        try {
+            const response1 = await db.query("select email from users where user_id = $1;",[userId])
+            console.log(response1.rows[0].email)
+            const email = response1.rows[0].email
+            } catch (error) {
+            
+        }
+        const response = await db.query("select t.transfer_id from transfer t,seller_details s where t.user_id = $1 and s.email = $2 and s.seller_id = t.seller_id;",[userId,email])
         if(response.rowCount)
             res.status(200).json({success:true})
         else
