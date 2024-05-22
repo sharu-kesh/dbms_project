@@ -3,7 +3,7 @@ import React from 'react'
 function Temp_transfer() {
   return (
     <div>
-      sdfgdhnjbfjkgbfdsjkg
+                                          ""YOUR REQUEST IS BEING PROCESSED""
     </div>
   )
 }
