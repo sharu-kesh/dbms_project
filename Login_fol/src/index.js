@@ -594,7 +594,7 @@ app.get("/home/owner",async(req,res,next)=>{
                     next(error)
                 }
             }
-        const response=await db.query("select concat(concat(fname,' '),lname) fullName,phone_no,address,aadhar_no,gender,email from user_details,users where user_details.user_id=$1 and users.user_id=$1",[userId]);
+        const response=await db.query("select concat(concat(fname,' '),lname) fullName,phone_no,extract(year from age(dob)) as age,address,aadhar_no,gender,email from user_details,users where user_details.user_id=$1 and users.user_id=$1",[userId]);
         if(!response.rowCount){
             console.log("here")
             return next(errorHandler(404,"User not found"))
