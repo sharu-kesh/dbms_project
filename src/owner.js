@@ -27,7 +27,6 @@ useEffect(
      getOwner()
 },[]
 )
-
   return (
     <div className="complaintt">
         <div className="complaintForm">
@@ -66,7 +65,7 @@ useEffect(
                         <input type="text" value={owner.fullname} readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={12}/>
+                        <input type="text" value={owner.age}/>
                     </tr>
                     <tr>
                         <input type="text" value={owner.gender}readOnly/>
