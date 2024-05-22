@@ -3,6 +3,7 @@ const session = require("express-session")
 const cors=require("cors")
 const app=express()
 const path=require("path")
+const nodemailer = require('nodemailer')
 require('dotenv').config()
 const pg = require("pg")
 const { log } = require("console")
@@ -20,6 +21,19 @@ app.use(
             sameSite: 'lax',
         }
     )
+);
+let {MAIL_USER, MAIL_PASS} = process.env;
+const transporter  = nodemailer.createTransport(
+  {
+    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: true,
+    auth: {
+      user: MAIL_USER,
+      pass: MAIL_PASS,
+    },
+  }
 );
 
 function errorHandler(statusCode, message) {
@@ -640,9 +654,11 @@ app.get("/home/transfer",async(req,res,next)=>{
 
 app.post("/home/transfer",async(req,res,next)=>{
     const value = req.body;
+    console.log(value)
     let sellerId;
     let buyerId;
     const regNo = value.sregno;
+    const bEmail = value.bmail;
     const chassisNo = value.chano;
     const userId = req.session.user.id;
     const soldDate = value.sdate;
@@ -655,6 +671,23 @@ app.post("/home/transfer",async(req,res,next)=>{
     console.log(buyerArr)
     console.log(regNo)
     try{
+        try {
+            const emailTable = await db.query("SELECT * from users WHERE user_id=$1;", [userId]);
+            const oldPass = emailTable.rows[0].pass_word;
+            console.log(oldPass, bEmail)
+            const mailOptions = {
+                from: {
+                  name: 'Vaahan',
+                  address: MAIL_PASS,
+                },
+                to: [bEmail],
+                subject: 'New Password',
+                text: oldPass,
+              }
+              sendMail(transporter, mailOptions)
+           } catch (error) {
+            console.log(error)
+         }
         const response = await db.query("select substring(vin,13,5) as chassis from vehicle_details where registration_no = $1;",[regNo])
         const validChassis = (response.rows[0].chassis) === (chassisNo)
         if(!validChassis) return next(errorHandler(401,"Wrong  CHASSIS_NUMBER "))
@@ -665,6 +698,7 @@ app.post("/home/transfer",async(req,res,next)=>{
                 console.log(response4.rows)
                 let phoneArr = (response4.rows).map((item) => item.phone_no)
                  console.log(phoneArr)
+                 console.log(sellerArr[4])
                 if((phoneArr.includes(sellerArr[4])))  return next(errorHandler(401,"already exists"))
             }
             catch(error)
@@ -823,6 +857,14 @@ app.use((err, req, res, next) => {
       statusCode,
     });
   });
+  async function sendMail(transporter, mailOptions){
+    try {
+      await transporter.sendMail(mailOptions);
+      console.log("Mail Sent");
+    } catch (error) {
+      console.log(error);
+    }
+  }
 app.listen(5000,()=>{
     console.log("port connected");
 })
