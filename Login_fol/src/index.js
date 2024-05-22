@@ -230,7 +230,7 @@ app.post("/user/login",async(req,res,next)=>{
             const validPwd = password === response.rows[0].pass_word;
             if(!validPwd) return next(errorHandler(401,"Wrong credentials"))
             req.session.user = {id:response.rows[0].user_id};
-            req.session.police = {regNo:null}
+            req.session.police1 = {regNo:null}
             console.log(req.session.user)
             res.status(200).json({success:true, data:response.rows[0].user_id})
         }
@@ -278,7 +278,7 @@ app.post("/admin/homedetails",async(req,res,next)=>{
 
 app.get("/police/home",async(req,res,next)=>
     {
-    var stationId =  req.session.police.id;
+    var stationId =  req.session.police1.id;
     console.log(stationId)
     try{
         const response = await db.query("select * from complaint_details where station_id = $1",[stationId])
@@ -350,7 +350,7 @@ app.post("/police/login",async(req,res,next)=>{
         }else{
             const validPwd = policePassword === response.rows[0].password;
             if(!validPwd) return next(errorHandler(401,"Wrong credentials"))
-            req.session.police = {id:response.rows[0].station_id}
+            req.session.police1 = {id:response.rows[0].station_id}
             req.session.user = {id:null}
             res.status(200).json({success:true, data:response.rows})
         }
@@ -371,6 +371,7 @@ app.post("/rto/login",async(req,res,next)=>{
             const validPwd = password === response.rows[0].password;
             if(!validPwd) return next(errorHandler(401,"Wrong credentials"))
             req.session.rto = {id:response.rows[0].office_id}
+            req.session.police1 = {id:rtoid}
             req.session.user = {id:null}
             res.status(200).json({success:true, data:response.rows})
         }
@@ -730,8 +731,8 @@ app.post("/police/login/vehicle",async(req,res,next)=>{
         console.log(regisArr)
         if(!(regisArr.includes(regNo)))
             return next(errorHandler(401,"Wrong credentials"))
-            req.session.police.regNo = regNo;
-            console.log(req.session.police)
+            req.session.police1.regNumber = regNo;
+            console.log(req.session.police1)
             res.status(200).json({success:true})
 
     }
