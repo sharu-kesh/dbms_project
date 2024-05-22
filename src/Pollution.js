@@ -6,7 +6,7 @@ export default function Pollution(){
     const [pollution,setPollution] = useState({
         issue_date:new Date()
     })
-    const [expiry,setExpiry]=useState("");
+    const [isExpired,setIsExpired]=useState("");
     const [error,setError] = useState("");
     useEffect(
         function(){
@@ -15,7 +15,12 @@ export default function Pollution(){
                     const respon = await axios.get(`http://localhost:5000/home/pollution`)
                     // console.log(respon)
                     setPollution(respon.data.data)
-                    setExpiry("hello")
+                    const current=new Date();
+    const expiry=new Date(respon.data.data.issue_date)
+    expiry.setMonth(expiry.getMonth()+6)
+    if(expiry<current){
+            setIsExpired(true)
+    }
                 } catch (error) {
                     console.log(error)
                     if (error?.response?.data?.message) {
@@ -29,6 +34,7 @@ export default function Pollution(){
         },[]
     )
     console.log(pollution)
+    
     return(
         <div className="complaintt">
         <div className="complaintForm">
@@ -81,7 +87,13 @@ export default function Pollution(){
                 </tbody>
             </table>
             </div>
-            {expiry && <p id='err'>{expiry}</p>}
+            <div >
+            {isExpired &&
+            (
+                <div id="err">Your insurance has expired! Renew it as soon as possible</div>
+
+            )}
+        </div>        
         </div>
         </div>
     );

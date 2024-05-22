@@ -426,7 +426,13 @@ app.post("/admin/transfer/update",async(req,res,next)=>{
 
 app.get("/home/vehicle",async(req,res,next)=>{
     userId = req.session.user.id;
-    const regNo = req.session.police1.regNumber; 
+    let regNo=0;
+    if(req.session.police){
+         regNo = req.session.police.regNo; 
+    }
+    if(req.session.police1){
+        regNo = req.session.police1.regNumber; 
+   }
     try{  
         if(regNo)
             {
@@ -458,7 +464,12 @@ app.get("/home/vehicle",async(req,res,next)=>{
 
 app.get("/home/insurance",async(req,res,next)=>{
     userId = req.session.user.id; 
-    const regNo = req.session.police1.regNumber; 
+    let regNo=0;
+    if(req.session.police)
+     regNo = req.session.police.regNo ; 
+    if(req.session.police1){
+        regNo = req.session.police1.regNumber; 
+   }
     try{  
         if(regNo)
             {
@@ -491,7 +502,12 @@ app.get("/home/insurance",async(req,res,next)=>{
 // app.get()
 app.get("/home/pollution",async(req,res,next)=>{
     userId = req.session.user.id;
-    const regNo = req.session.police1.regNumber; 
+    let regNo=0;
+    if(req.session.police)
+    regNo = req.session.police.regNo; 
+    if(req.session.police1){
+        regNo = req.session.police1.regNumber; 
+   }
     try{  
         if(regNo)
             {
@@ -522,7 +538,12 @@ app.get("/home/pollution",async(req,res,next)=>{
 
 app.get("/home/licence",async(req,res,next)=>{
     userId = req.session.user.id;
-    const regNo = req.session.police1.regNumber; 
+    let regNo=0;
+    if(req.session.police)
+     regNo = req.session.police.regNo; 
+    if(req.session.police1){
+        regNo = req.session.police1.regNumber; 
+   }
     try{  
         if(regNo)
             {
@@ -551,12 +572,19 @@ app.get("/home/licence",async(req,res,next)=>{
 
 app.get("/home/owner",async(req,res,next)=>{
     userId = req.session.user.id;
-    const regNo = req.session.police1.regNumber;
+    let regNo=0;
+    if(req.session.police)
+    regNo = req.session.police.regNo;
+    if(req.session.police1){
+        regNo = req.session.police1.regNumber; 
+   }
+    console.log(req.session.police)
     try{
         
         if(regNo)
             {
                 try{
+                    console.log("GHELLOO")
                     const response1 = await db.query("select user_id from vehicle_details where registration_no = $1",[regNo])
                     userId = response1.rows[0].user_id;
                 }

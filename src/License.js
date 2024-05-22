@@ -7,14 +7,18 @@ export default function License(){
         issue_date:new Date(),
         exp_date:new Date()
     });
-    const [expiry,setExpiry]=useState("");
+    const [isExpired,setIsExpired]=useState(false);
     useEffect(function(){
         async function getLicence(){
             try {
                 const respon = await axios.get(`http://localhost:5000/home/licence`)
                 console.log(respon)
                 setLicence(respon.data.data)
-                setExpiry("hello")
+                const current=new Date();
+                const expiry=new Date(respon.data.data.exp_date)
+                if(expiry<current){
+                        setIsExpired(true)
+                }
             } catch (error) {
                 console.log(error)
                 if (error?.response?.data?.message) {
@@ -28,6 +32,7 @@ export default function License(){
     },[])
 
     console.log(licence)
+   
     return(
         <div className="complaintt">
         <div className="complaintForm">
@@ -62,8 +67,13 @@ export default function License(){
                 </tbody>
             </table>
             </div>
-            {expiry && <p id='err'>{expiry}</p>}
-        </div>
+            <div >
+            {isExpired &&
+            (
+                <div id="err">Your insurance has expired! Renew it as soon as possible</div>
+
+            )}
+        </div>        </div>
         </div>
     );
 }

@@ -5,11 +5,11 @@ axios.defaults.withCredentials = true;
 export default function Insurance(){
     const [error,setError] = useState("")
   
-    const [insurance,setInsurance] = useState({
+    const [insuranceDetails,setInsuranceDetails] = useState({
         issue_date:new Date(),
         exp_date:new Date()
     })
-    const [expiry,setExpiry]=useState("");
+    const [isExpired,setIsExpired]=useState(false);
     
        
         useEffect(
@@ -18,8 +18,13 @@ export default function Insurance(){
                     try {
                         const respon = await axios.get(`http://localhost:5000/home/insurance`)
                         console.log(respon)
-                        setInsurance(respon.data.data)    
-                        setExpiry("hello")
+                        setInsuranceDetails(respon.data.data)    
+                        const current=new Date();
+                        const expiry=new Date(respon.data.data.exp_date)
+                        if(expiry<current){
+                                setIsExpired(true)
+                        }
+                        
                     } catch (error) {
                         console.log(error)
                         if (error?.response?.data?.message) {
@@ -35,7 +40,8 @@ export default function Insurance(){
         
         
     
-    console.log(insurance)
+    console.log(insuranceDetails)
+   
     return(
         <div className="complaintt">
         <div className="complaintForm">
@@ -65,24 +71,30 @@ export default function Insurance(){
                 <thead>DETAILS</thead>
                 <tbody>
                     <tr>
-                        <input type="text" value={insurance.insurance_no} readOnly/>
+                        <input type="text" value={insuranceDetails.insurance_no} readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={insurance.scheme_no}readOnly/>
+                        <input type="text" value={insuranceDetails.scheme_no}readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={insurance.ins_provider}readOnly/>
+                        <input type="text" value={insuranceDetails.ins_provider}readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={new Date(insurance.issue_date).toLocaleDateString()} readOnly/>
+                        <input type="text" value={new Date(insuranceDetails.issue_date).toLocaleDateString()} readOnly/>
                     </tr>
                     <tr>
-                        <input type="text" value={new Date(insurance.exp_date_date).toLocaleDateString()} readOnly/>
+                        <input type="text" value={new Date(insuranceDetails.exp_date).toLocaleDateString()} readOnly/>
                     </tr>
                 </tbody>
             </table>
             </div>
-            {expiry && <p id='err'>{expiry}</p>}
+        </div>
+        <div >
+            {isExpired &&
+            (
+                <div id="err">Your insurance has expired! Renew it as soon as possible</div>
+
+            )}
         </div>
         </div>
     );
