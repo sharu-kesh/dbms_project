@@ -80,10 +80,10 @@ async function updateDetails(userId,email,fname,lname,phone_no,dob,address,aadha
           <Link to={`/transfer_details/${item.transfer_id}`}><button>More Details</button></Link>
         </div>
         </div>)
+      return null
       })
-    } 
-    
-       
+    }
+    {error && <p id="err">{error}</p>}
 
 </div>
   )

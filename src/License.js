@@ -73,6 +73,7 @@ export default function License(){
                 <div id="err">Your insurance has expired! Renew it as soon as possible</div>
 
             )}
+            {error && <div id="err">{error}</div>}
         </div>        </div>
         </div>
     );

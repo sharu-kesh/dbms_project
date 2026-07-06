@@ -79,8 +79,9 @@ async function updateComplaint(complaintId) {
           <Link to={`more_details?id=${item.complaint_id}`}><button>More Details</button></Link>
         </div>
         </div>)
+      return null
     })}
-               
+    {error && <p id="err">{error}</p>}
 
     </div>
   )

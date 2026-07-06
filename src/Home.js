@@ -37,6 +37,7 @@ export default function Home(){
     return(
         <>
         <Nav tPath = {cont?"/home/temp_transfer":"/home/transfer"}/>
+        {error && <p id="err">{error}</p>}
         <div className="image">
             <img src={bike} alt=""></img>
         </div>

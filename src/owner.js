@@ -85,8 +85,9 @@ useEffect(
                 </tbody>
             </table>
             </div>
+            {error && <p id="err">{error}</p>}
         </div>
-        </div> 
+        </div>
     )
 }
 

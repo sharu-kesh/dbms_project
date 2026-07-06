@@ -1,7 +1,6 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import {useState,useRef, useEffect} from 'react';
+import { useParams } from 'react-router-dom';
+import {useState, useEffect} from 'react';
 import axios from 'axios';
-import { useSearchParams } from 'react-router-dom';
 axios.defaults.withCredentials = true;
 
 function Transfer_details() {
@@ -25,7 +24,7 @@ function Transfer_details() {
                 }
             }
             getQuery()
-        },[]
+        },[id]
     )
     console.log(details);
   return (
@@ -132,7 +131,7 @@ function Transfer_details() {
                 </tbody>
             </table>
         </div>
-        
+        {error && <p id="err">{error}</p>}
     </div>
     </div>
   )

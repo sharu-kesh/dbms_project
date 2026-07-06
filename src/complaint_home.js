@@ -47,6 +47,7 @@ const ComplaintHome = () => {
         </Link>
           <button onClick={handleSubmit}>Old Complaint</button>
       </div>
+      {error && <p id="err">{error}</p>}
     </div>
   );
 };

@@ -8,7 +8,7 @@ function Nav(props){
                 <li><a href="/home">Home</a></li>
                 <li><a href={props.tPath}>Transfer Onwership</a></li>
                 <div className="vehicle">
-                <li><a href="#">Info</a>
+                <li><a href="#vehicle-info">Info</a>
                     <div className="content">
                         <Link to="/home/vehicle"> Vehicle Details</Link>
                         <Link to="/home/pollution">Pollution Certificate</Link>

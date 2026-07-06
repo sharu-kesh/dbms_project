@@ -9,7 +9,6 @@ export default function User({setUserId}){
     const [password,setPassword] = useState("")
     const navigate = useNavigate()
     const [error,setError] = useState("")
-    const [isLoggedin, setIsLoggedin] = useState(false);
 
 async function handleSubmit(e){
     e.preventDefault()
@@ -52,7 +51,7 @@ useEffect(function(){
                 <FaLock className='icon'/>
             </div>
             <div className="remember-forgot">
-                <a href="#">Forgot Password?</a>
+                <a href="#forgot-password">Forgot Password?</a>
             </div>
             <input type='submit' className="submit" value='Login'
             />
