@@ -10,7 +10,7 @@ const { log } = require("console")
 const { CgLayoutGrid } = require("react-icons/cg")
 const cookieParser = require("cookie-parser")
 // const errorHandler= require("./utils.js")
-let { PGHOST, PGDATABASE, PGUSER, PGPASSWORD } = process.env;
+let { PGHOST, PGDATABASE, PGUSER, PGPASSWORD, DATABASE_URL, FRONTEND_URL } = process.env;
 app.use(cookieParser())
 app.use(
     session(
@@ -52,21 +52,17 @@ function errorHandler(statusCode, message) {
   }
 
 
-const db=new pg.Client({
-    user:PGUSER,
-    host:PGHOST,
-    database:PGDATABASE,
-    password:PGPASSWORD,
-    port:5432,
-    ssl:{
-        require:true
+const db = new pg.Client({
+    connectionString: DATABASE_URL || `postgresql://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}`,
+    ssl: {
+        require: true
     }
 })
 let u_id;
 db.connect()
 app.use(express.urlencoded({extended:true}))
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: FRONTEND_URL || "http://localhost:3000",
     credentials: true,
 }))
 app.use(express.json())
@@ -177,60 +173,38 @@ app.post("/user/signup4",async (req,res,next)=>{
 })
 app.post("/user/complaint",async (req,res,next)=>{
     const {cname,gender,dob,address,mobile,mail,mdate,place,descr} = req.body;
-    const userId = req.session.user.id
+    const userId = req.session.user.id;
     console.log(req.body);
-    if(!cname || !gender || !dob || !address || !mobile || !mobile || !mail || !mdate || !place || !descr){
+    if(!cname || !gender || !dob || !address || !mobile || !mail || !mdate || !place || !descr){
         return next(errorHandler(423,"Please provide all credentials properly"))
-
     }
     try{
-    try{
-    try{
-        try{
-    try{
-        
         const response1 = await db.query("select registration_no from vehicle_details where user_id = $1",[userId])
-        var regNo = response1.rows[0].registration_no;
-        var regPin = regNo.slice(0,4);
+        if (!response1.rowCount) {
+            return next(errorHandler(404, "No vehicle registered under this user account."));
+        }
+        const regNo = response1.rows[0].registration_no;
+        const regPin = regNo.slice(0,4);
 
-    
-    }
-    catch(err){
-        next(err);
-    }
-    const response2 = await db.query("select station_id from admins where office_id = $1",[regPin])
-    var stationId = response2.rows[0].station_id;
-}
-catch(error)
-{
-    console.log(error)
-    next(error)
-}
-    const response3 =  await db.query(" insert into user_complaints(user_id,vehicle_no,vehicle_lost_place,vehicle_description,vehicle_lost_date) values($1,$2,$3,$4,$5);",[userId,regNo,place,descr,mdate])
+        const response2 = await db.query("select station_id from admins where office_id = $1",[regPin])
+        if (!response2.rowCount) {
+            return next(errorHandler(404, "No police station found matching your vehicle registration region."));
+        }
+        const stationId = response2.rows[0].station_id;
+
+        await db.query("insert into user_complaints(user_id,vehicle_no,vehicle_lost_place,vehicle_description,vehicle_lost_date) values($1,$2,$3,$4,$5);",[userId,regNo,place,descr,mdate])
+
+        const response4 = await db.query("select complaint_id from user_complaints where user_id = $1 order by complaint_id desc limit 1;",[userId])
+        const complaintId = response4.rows[0].complaint_id;
+
+        await db.query("insert into police_complaints(complaint_id,station_id,vehicle_lost_date) values($1,$2,$3);",[complaintId,stationId,mdate])
+        res.status(200).json({success:true,message:"Values entered successfully"})
     }
     catch(error)
     {
         console.log(error)
         next(error)
     }
-
-    const response4 = await db.query("select complaint_id from user_complaints where user_id = $1;",[userId])
-    var complaintId = response4.rows[0].complaint_id;
-}
-   catch(error)
-   {
-    console.log(error)
-    next(error)
-   }
-   const response5 =  await db.query(" insert into police_complaints(complaint_id,station_id,vehicle_lost_date) values($1,$2,$3);",[complaintId,stationId,mdate])
-    res.status(200).json({success:true,message:"Values entered successfully"})
-}
-
-catch(error)
-{
-    console.log(error)
-    next(error)
-}
 })
 app.post("/user/login",async(req,res,next)=>{
     console.log(req.body)
@@ -302,6 +276,28 @@ app.get("/police/home",async(req,res,next)=>
         }else{
             console.log(response.rows)
             res.status(200).json({success:true, data:response.rows})
+    }}
+    catch(error)
+    {
+        console.log(error)
+        next(error)
+    }
+    
+})
+
+app.get("/police/home/:id",async(req,res,next)=>
+    {
+    var complaintId =  req.params.id;
+    try{
+        console.log(complaintId)
+        const response = await db.query("select * from complaint_details natural join police where complaint_id = $1",[complaintId])
+        if(!response.rowCount){
+            console.log("here")
+            return next(errorHandler(404,"Details Not Fetched"))
+        }else{
+            console.log(response.rows)
+            const {password, ...data} = response.rows[0];
+            res.status(200).json({success:true, data})
     }}
     catch(error)
     {
@@ -419,20 +415,10 @@ app.post("/admin/transfer/update",async(req,res,next)=>{
     console.log(req.body)
     const arr = req.body
     try {
-        const response = await db.query("update transfer set verify_date = (select current_date) where user_id = $1",[arr[0]]);
-        try {
-            const response2 = await db.query("update users set email = $2 where user_id = $1",arr.slice(0,2))
-            try {
-                const response2 = await db.query("update user_details set fname=$2,lname=$3,phone_no=$4,dob=$5,address=$6,aadhar_no=$7,gender=$8 where user_id = $1",[arr[0],arr[2],arr[3],arr[4],arr[5],arr[6],arr[7],arr[8]])
-                res.status(200).json({success:true})
-            } catch (error) {
-                console.log(error)
-            next(error)
-            }
-        } catch (error) {
-            console.log(error)
-            next(error)
-        }
+        await db.query("update transfer set verify_date = (select current_date) where user_id = $1",[arr[0]]);
+        await db.query("update users set email = $2 where user_id = $1",arr.slice(0,2))
+        await db.query("update user_details set fname=$2,lname=$3,phone_no=$4,dob=$5,address=$6,aadhar_no=$7,gender=$8 where user_id = $1",[arr[0],arr[2],arr[3],arr[4],arr[5],arr[6],arr[7],arr[8]])
+        res.status(200).json({success:true})
     } catch (error) {
         console.log(error)
         next(error)
@@ -641,12 +627,13 @@ app.get("/home/transfer",async(req,res,next)=>{
     const userId = req.session.user.id;
     console.log("userID : ",userId)
     try {
+        let email;
         try {
             const response1 = await db.query("select email from users where user_id = $1;",[userId])
             console.log(response1.rows[0].email)
-            const email = response1.rows[0].email
-            } catch (error) {
-            
+            email = response1.rows[0].email
+        } catch (error) {
+            console.log(error);
         }
         const response = await db.query("select t.transfer_id from transfer t,seller_details s where t.user_id = $1 and s.email = $2 and s.seller_id = t.seller_id;",[userId,email])
         if(response.rowCount)
@@ -685,7 +672,7 @@ app.post("/home/transfer",async(req,res,next)=>{
             const mailOptions = {
                 from: {
                   name: 'Vaahan',
-                  address: MAIL_PASS,
+                  address: MAIL_USER,
                 },
                 to: [bEmail],
                 subject: 'New Password',
