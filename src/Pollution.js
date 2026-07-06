@@ -93,7 +93,8 @@ export default function Pollution(){
                 <div id="err">Your insurance has expired! Renew it as soon as possible</div>
 
             )}
-        </div>        
+            {error && <div id="err">{error}</div>}
+        </div>
         </div>
         </div>
     );

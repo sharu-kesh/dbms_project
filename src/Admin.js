@@ -9,7 +9,6 @@ export default function User({setUserId}){
     const [password,setPassword] = useState("")
     const navigate = useNavigate()
     const [error,setError] = useState("")
-    const [isLoggedin, setIsLoggedin] = useState(false);
 
 async function handleSubmit(e){
     e.preventDefault()

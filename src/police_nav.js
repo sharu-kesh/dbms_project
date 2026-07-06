@@ -7,7 +7,7 @@ function Police_nav(){
             <div class="vertical-line"></div>
                 <li><a href="/police/police_home">Home</a></li>
                 <div className="vehicle">
-                <li><a href="#">Info</a>
+                <li><a href="#vehicle-info">Info</a>
                     <div className="content">
                         <Link to="/Vehicle"> Vehicle Details</Link>
                         <Link to="/Pollution">Pollution Certificate</Link>
