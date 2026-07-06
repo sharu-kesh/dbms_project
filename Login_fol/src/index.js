@@ -7,7 +7,6 @@ const nodemailer = require('nodemailer')
 require('dotenv').config()
 const pg = require("pg")
 const { log } = require("console")
-const { CgLayoutGrid } = require("react-icons/cg")
 const cookieParser = require("cookie-parser")
 // const errorHandler= require("./utils.js")
 let { PGHOST, PGDATABASE, PGUSER, PGPASSWORD, DATABASE_URL, FRONTEND_URL } = process.env;
